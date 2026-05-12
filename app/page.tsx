@@ -1,22 +1,19 @@
-import { auth } from "@clerk/nextjs/server";
-import { UserButton, SignInButton } from "@clerk/nextjs";
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { Features } from "@/components/landing/Features";
+import { Pricing } from "@/components/landing/Pricing";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { Footer } from "@/components/landing/Footer";
 
-export default async function Home() {
-  const { userId } = await auth();
-
+export default function LandingPage() {
   return (
-    <main className="p-10">
-      {!userId ? (
-        <SignInButton />
-      ) : (
-        <div className="flex items-center gap-4">
-          <UserButton />
-
-          <h1 className="text-3xl font-bold">
-            POD Agent Dashboard
-          </h1>
-        </div>
-      )}
+    <main className="min-h-screen bg-black text-white selection:bg-primary/30">
+      <Navbar />
+      <Hero />
+      <Features />
+      <Pricing />
+      <Testimonials />
+      <Footer />
     </main>
   );
 }
