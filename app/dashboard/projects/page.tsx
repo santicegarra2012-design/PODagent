@@ -3,18 +3,33 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { supabase } from "@/lib/supabase";
+import { motion } from "framer-motion";
+import {
+  FolderOpen,
+  LayoutGrid,
+  LayoutList,
+  Plus,
+  Loader2,
+  Calendar,
+} from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
+// ─── Type (unchanged) ─────────────────────────────────────────────────────────
 type Project = {
   id: string;
   niche: string;
   created_at: string;
 };
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ProjectsPage() {
   const { user, isLoaded } = useUser();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [view, setView] = useState<"grid" | "list">("grid");
 
+  // ─── Fetch (unchanged logic) ───────────────────────────────────────────────
   useEffect(() => {
     async function loadProjects() {
       if (!user) return;
@@ -34,78 +49,136 @@ export default function ProjectsPage() {
     loadProjects();
   }, [user]);
 
+  // ─── Loading ───────────────────────────────────────────────────────────────
   if (!isLoaded || loadingProjects) {
-    return <div className="flex items-center justify-center min-h-screen text-gray-600">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="flex items-center gap-2 text-zinc-400">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span className="text-sm">Loading projects…</span>
+        </div>
+      </div>
+    );
   }
 
+  // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-screen w-60 bg-white border-r border-gray-200 py-8 px-4 flex flex-col z-50">
-        <div className="flex items-center gap-3 px-2 mb-10">
-          <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white font-bold">
-            P
-          </div>
-          <div>
-            <h1 className="font-bold text-sm text-gray-900">PrintAI</h1>
-            <p className="text-xs text-gray-500 tracking-wider uppercase mt-1">Pro Plan</p>
-          </div>
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* Toolbar */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2 p-1 rounded-xl bg-white/5 border border-white/10">
+          <button
+            onClick={() => setView("grid")}
+            className={cn(
+              "p-1.5 rounded-lg transition-colors",
+              view === "grid" ? "bg-white/10 text-white" : "text-zinc-500 hover:text-zinc-300"
+            )}
+          >
+            <LayoutGrid className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setView("list")}
+            className={cn(
+              "p-1.5 rounded-lg transition-colors",
+              view === "list" ? "bg-white/10 text-white" : "text-zinc-500 hover:text-zinc-300"
+            )}
+          >
+            <LayoutList className="w-4 h-4" />
+          </button>
         </div>
-        <nav className="flex-1 space-y-1">
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors" href="/dashboard">
-            📊 Dashboard
-          </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors" href="/dashboard/history">
-            📜 History
-          </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-100 text-indigo-600 font-semibold transition-colors" href="/dashboard/projects">
-            📁 Projects
-          </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors" href="/dashboard/settings">
-            ⚙️ Settings
-          </a>
-        </nav>
-      </aside>
 
-      {/* Main Content */}
-      <main className="ml-60 pt-8 pb-12 px-8">
-        <div className="max-w-6xl">
-          {/* Header Section */}
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900">My Projects</h2>
-              <p className="text-gray-600 mt-2">Manage all your saved POD niche projects.</p>
-            </div>
-            <a href="/dashboard" className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2">
-              ➕ New Project
-            </a>
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-600 transition-colors shadow-lg shadow-primary/20"
+        >
+          <Plus className="w-4 h-4" />
+          New Project
+        </Link>
+      </div>
+
+      {/* Empty State */}
+      {projects.length === 0 && (
+        <div className="glass border-white/10 rounded-2xl p-16 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
+            <FolderOpen className="w-7 h-7 text-primary" />
           </div>
+          <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
+          <p className="text-zinc-500 mb-6 text-sm">Create your first project to get started.</p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-600 transition-colors shadow-lg shadow-primary/25"
+          >
+            <Plus className="w-4 h-4" />
+            Create Project
+          </Link>
+        </div>
+      )}
 
-          {/* Projects Grid */}
-          {projects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project) => (
-                <div key={project.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{project.niche}</h3>
-                  <p className="text-sm text-gray-600 mb-4">Created {new Date(project.created_at).toLocaleDateString()}</p>
-                  <button className="w-full px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg font-medium hover:bg-indigo-100 transition-colors">
-                    📝 Edit Project
-                  </button>
+      {/* Grid view */}
+      {projects.length > 0 && view === "grid" && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.05 }}
+              className="glass border-white/10 rounded-2xl p-5 flex flex-col gap-4 group hover:border-white/20 transition-all"
+            >
+              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <FolderOpen className="w-4 h-4 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-white mb-1">{project.niche}</h3>
+                <div className="flex items-center gap-1.5 text-zinc-600 text-[11px]">
+                  <Calendar className="w-3 h-3" />
+                  {new Date(project.created_at).toLocaleDateString()}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-white border border-gray-200 rounded-2xl p-12 shadow-sm text-center">
-              <div className="text-6xl mb-4">📁</div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">No Projects Yet</h3>
-              <p className="text-gray-600 mb-6">Create your first project to get started.</p>
-              <a href="/dashboard" className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
-                ✨ Create Project
-              </a>
-            </div>
-          )}
+              </div>
+              <div className="flex items-center gap-2 pt-3 border-t border-white/10">
+                <span className="text-[10px] px-2 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-green-400 font-medium">
+                  Active
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </main>
+      )}
+
+      {/* List view */}
+      {projects.length > 0 && view === "list" && (
+        <div className="glass border-white/10 rounded-2xl overflow-hidden">
+          <div className="grid grid-cols-12 px-5 py-3 border-b border-white/10 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+            <span className="col-span-6">Project</span>
+            <span className="col-span-3">Created</span>
+            <span className="col-span-3">Status</span>
+          </div>
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: i * 0.04 }}
+              className="grid grid-cols-12 px-5 py-4 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors items-center"
+            >
+              <div className="col-span-6 flex items-center gap-3">
+                <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <FolderOpen className="w-3.5 h-3.5 text-primary" />
+                </div>
+                <span className="text-sm text-white font-medium truncate">{project.niche}</span>
+              </div>
+              <span className="col-span-3 text-xs text-zinc-500">
+                {new Date(project.created_at).toLocaleDateString()}
+              </span>
+              <div className="col-span-3">
+                <span className="text-[10px] px-2 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-green-400 font-medium">
+                  Active
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

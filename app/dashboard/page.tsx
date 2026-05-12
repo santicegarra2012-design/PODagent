@@ -5,7 +5,6 @@ import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Sparkles } from "lucide-react";
 
-import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { GeneratorPanel } from "@/components/dashboard/GeneratorPanel";
 import { ResultsPanel } from "@/components/dashboard/ResultsPanel";
@@ -158,7 +157,7 @@ export default function DashboardPage() {
   // ─── Loading gate ─────────────────────────────────────────────────────────
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
+      <div className="flex items-center justify-center py-32">
         <div className="flex items-center gap-2 text-zinc-400">
           <Loader2 className="w-5 h-5 animate-spin" />
           <span className="text-sm">Loading…</span>
@@ -174,76 +173,74 @@ export default function DashboardPage() {
 
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
-    <DashboardShell>
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Stats */}
-        <StatsCards />
+    <div className="max-w-7xl mx-auto space-y-6">
+      {/* Stats */}
+      <StatsCards />
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          {/* Left: Generator + Results */}
-          <div className="xl:col-span-2 space-y-6">
-            <GeneratorPanel
-              niche={niche}
-              loading={loading}
-              seoRetryCountdown={seoRetryCountdown}
-              onNicheChange={setNiche}
-              onGenerate={() => generateSEO()}
-            />
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Left: Generator + Results */}
+        <div className="xl:col-span-2 space-y-6">
+          <GeneratorPanel
+            niche={niche}
+            loading={loading}
+            seoRetryCountdown={seoRetryCountdown}
+            onNicheChange={setNiche}
+            onGenerate={() => generateSEO()}
+          />
 
-            <AnimatePresence mode="wait">
-              {structuredResult && !loading && (
-                <motion.div
-                  key="results"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <ResultsPanel result={structuredResult} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {structuredResult && !loading && (
+              <motion.div
+                key="results"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4 }}
+              >
+                <ResultsPanel result={structuredResult} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-            {/* AI Image Generation Teaser */}
-            <AnimatePresence>
-              {structuredResult && !loading && (
-                <motion.div
-                  key="image-teaser"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.3 }}
-                  className="glass border-white/10 rounded-2xl p-6 text-center"
-                >
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-pink-400/10 border border-pink-400/20 flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 text-pink-400" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-white mb-1">AI Image Generation</h4>
-                      <p className="text-xs text-zinc-500">Coming soon — generate product mockups with AI directly from your niche.</p>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-500 font-medium">
-                      Coming Soon
-                    </span>
+          {/* AI Image Generation Teaser */}
+          <AnimatePresence>
+            {structuredResult && !loading && (
+              <motion.div
+                key="image-teaser"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="glass border-white/10 rounded-2xl p-6 text-center"
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-pink-400/10 border border-pink-400/20 flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-pink-400" />
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-white mb-1">AI Image Generation</h4>
+                    <p className="text-xs text-zinc-500">Coming soon — generate product mockups with AI directly from your niche.</p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-500 font-medium">
+                    Coming Soon
+                  </span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-          {/* Right: Sidebar panels */}
-          <div className="space-y-4">
-            <QuickActions
-              onGenerate={() => generateSEO()}
-              onSave={createProject}
-              onCopyAll={handleCopyAll}
-              isSaving={isSaving}
-              hasResult={!!structuredResult}
-            />
-            <RecentProjects />
-          </div>
+        {/* Right: Sidebar panels */}
+        <div className="space-y-4">
+          <QuickActions
+            onGenerate={() => generateSEO()}
+            onSave={createProject}
+            onCopyAll={handleCopyAll}
+            isSaving={isSaving}
+            hasResult={!!structuredResult}
+          />
+          <RecentProjects />
         </div>
       </div>
-    </DashboardShell>
+    </div>
   );
 }
