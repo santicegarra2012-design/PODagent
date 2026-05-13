@@ -12,6 +12,7 @@ import {
   Sparkles,
   X,
   ChevronRight,
+  ImageIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "History", href: "/dashboard/history", icon: History },
   { label: "Projects", href: "/dashboard/projects", icon: FolderOpen },
+  { label: "AI Images", href: "/dashboard/images", icon: ImageIcon, badge: "New" },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
@@ -76,6 +78,11 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
                 )}
               />
               {item.label}
+              {"badge" in item && item.badge && !active && (
+                <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-primary/20 text-primary border border-primary/20">
+                  {item.badge}
+                </span>
+              )}
               {active && (
                 <ChevronRight className="w-3.5 h-3.5 ml-auto text-primary" />
               )}
