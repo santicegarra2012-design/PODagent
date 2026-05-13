@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, Heart, RefreshCw, ImageIcon, Sparkles } from "lucide-react";
+import { Download, Heart, RefreshCw, ImageIcon, Sparkles, FileText, Check } from "lucide-react";
 import type { GeneratedImage } from "@/lib/ai/image-types";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -75,6 +75,13 @@ function ImageCard({
     a.click();
   };
 
+  const [copied, setCopied] = useState(false);
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(image.prompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.94 }}
@@ -109,8 +116,16 @@ function ImageCard({
             <Heart className={cn("w-3.5 h-3.5", favorited && "fill-current")} />
           </button>
           <button
+            onClick={handleCopyPrompt}
+            className="p-1.5 rounded-lg bg-black/60 backdrop-blur-sm text-zinc-300 hover:text-white transition-colors"
+            title="Copy Prompt"
+          >
+            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <FileText className="w-3.5 h-3.5" />}
+          </button>
+          <button
             onClick={handleDownload}
             className="p-1.5 rounded-lg bg-black/60 backdrop-blur-sm text-zinc-300 hover:text-white transition-colors"
+            title="Download Image"
           >
             <Download className="w-3.5 h-3.5" />
           </button>
