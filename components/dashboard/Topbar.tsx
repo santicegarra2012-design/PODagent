@@ -12,6 +12,7 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
   "/dashboard/images": { title: "AI Image Studio", subtitle: "Generate premium POD artwork with AI" },
   "/dashboard/trends": { title: "Trend Research", subtitle: "Discover viral niches and market opportunities" },
   "/dashboard/trademark": { title: "Trademark Checker", subtitle: "Protect your shop from IP violations and bans" },
+  "/dashboard/optimizer": { title: "Listing Optimizer", subtitle: "Supercharge your titles, tags, and descriptions with AI" },
 };
 
 interface TopbarProps {
