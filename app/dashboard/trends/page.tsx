@@ -12,6 +12,7 @@ import {
   Star,
   Loader2
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { TrendsSearch } from "@/components/trends/TrendsSearch";
 import { TrendCard } from "@/components/trends/TrendCard";
 import type { TrendResult } from "@/lib/trends/types";
@@ -23,6 +24,8 @@ const INITIAL_TRENDS: TrendResult[] = [
     niche: "Retro Racing Aesthetics",
     score: "Very High",
     competition: "Medium",
+    type: "Evergreen",
+    platforms: ["Etsy", "Redbubble", "Pinterest"],
     productIdeas: ["Oversized Tees", "Enamel Pins", "Trucker Hats"],
     etsyKeywords: ["vintage racing shirt", "f1 aesthetic", "90s motorsport"],
     tiktokIdeas: ["Style with baggy jeans", "POV: you love 90s cars"],
@@ -34,6 +37,8 @@ const INITIAL_TRENDS: TrendResult[] = [
     niche: "Cottagecore Botanical",
     score: "High",
     competition: "High",
+    type: "Seasonal",
+    platforms: ["Etsy", "Amazon Merch", "Instagram"],
     productIdeas: ["Tote Bags", "Postcards", "Aprons"],
     etsyKeywords: ["botanical illustration", "vintage herb shirt", "cottagecore gift"],
     tiktokIdeas: ["Unboxing aesthetic tote", "Cozy morning vlog with art"],
@@ -45,6 +50,8 @@ const INITIAL_TRENDS: TrendResult[] = [
     niche: "Funny Dad Jokes (Tech Edition)",
     score: "High",
     competition: "Low",
+    type: "Evergreen",
+    platforms: ["Amazon Merch", "Redbubble"],
     productIdeas: ["Coffee Mugs", "Tech Stickers", "Polo Shirts"],
     etsyKeywords: ["coder dad gift", "funny programmer shirt", "it support joke"],
     tiktokIdeas: ["Dad jokes for software engineers", "Office humor skits"],
@@ -53,10 +60,17 @@ const INITIAL_TRENDS: TrendResult[] = [
   }
 ];
 
+const PLATFORMS = ["All", "Etsy", "Amazon Merch", "Redbubble", "Pinterest", "TikTok"];
+
 export default function TrendsPage() {
   const [trends, setTrends] = useState<TrendResult[]>(INITIAL_TRENDS);
+  const [selectedPlatform, setSelectedPlatform] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+
+  const filteredTrends = trends.filter(t => 
+    selectedPlatform === "All" || t.platforms.includes(selectedPlatform)
+  );
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -69,7 +83,14 @@ export default function TrendsPage() {
       });
       const data = await res.json();
       if (data.trends) {
-        setTrends(data.trends);
+        // Map types correctly for the new interface
+        const mappedTrends = data.trends.map((t: any) => ({
+          ...t,
+          id: t.id || Math.random().toString(36).slice(2, 10),
+          type: t.type || (Math.random() > 0.5 ? "Evergreen" : "Seasonal"),
+          platforms: t.platforms || ["Etsy", "Redbubble"]
+        }));
+        setTrends(mappedTrends);
       }
     } catch (error) {
       console.error("Trend research failed:", error);
@@ -118,6 +139,24 @@ export default function TrendsPage() {
         </div>
 
         <TrendsSearch onSearch={handleSearch} isLoading={isLoading} />
+
+        {/* Platform Filters */}
+        <div className="flex items-center gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl w-fit">
+          {PLATFORMS.map((platform) => (
+            <button
+              key={platform}
+              onClick={() => setSelectedPlatform(platform)}
+              className={cn(
+                "px-4 py-2 rounded-xl text-xs font-bold transition-all",
+                selectedPlatform === platform
+                  ? "bg-primary text-white shadow-lg shadow-primary/20"
+                  : "text-zinc-500 hover:text-zinc-300"
+              )}
+            >
+              {platform}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Results Header */}
@@ -129,7 +168,7 @@ export default function TrendsPage() {
             ))}
           </div>
           <span className="text-xs text-zinc-500">
-            <span className="text-white font-bold">120+ sellers</span> research this week
+            <span className="text-white font-bold">{filteredTrends.length} trends</span> found for {selectedPlatform === "All" ? "your niche" : selectedPlatform}
           </span>
         </div>
 
@@ -148,9 +187,9 @@ export default function TrendsPage() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <AnimatePresence mode="popLayout">
-          {trends.map((trend, i) => (
+          {filteredTrends.map((trend) => (
             <TrendCard 
-              key={trend.id || trend.niche} 
+              key={trend.id} 
               trend={trend} 
               onSave={handleSave}
             />
