@@ -14,6 +14,7 @@ import {
   ChevronRight,
   ImageIcon,
   LineChart,
+  ShieldAlert,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "AI Images", href: "/dashboard/images", icon: ImageIcon, badge: "New" },
   { label: "Trend Research", href: "/dashboard/trends", icon: LineChart },
+  { label: "Trademark Checker", href: "/dashboard/trademark", icon: ShieldAlert },
   { label: "History", href: "/dashboard/history", icon: History },
   { label: "Projects", href: "/dashboard/projects", icon: FolderOpen },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
