@@ -10,6 +10,7 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
   "/dashboard/projects": { title: "Projects", subtitle: "Manage your saved POD projects" },
   "/dashboard/settings": { title: "Settings", subtitle: "Manage your account and preferences" },
   "/dashboard/images": { title: "AI Image Studio", subtitle: "Generate premium POD artwork with AI" },
+  "/dashboard/trends": { title: "Trend Research", subtitle: "Discover viral niches and market opportunities" },
 };
 
 interface TopbarProps {
