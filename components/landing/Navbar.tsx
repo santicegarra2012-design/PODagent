@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { useAuth, SignInButton, UserButton } from "@clerk/nextjs";
-import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const { isSignedIn, isLoaded } = useAuth();

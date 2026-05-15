@@ -4,7 +4,7 @@ import type { GenerateImageRequest, GeneratedImage, AspectRatio } from "../image
 // Note: Ensure FAL_KEY is set in your environment variables.
 // The @fal-ai/client expects FAL_KEY or it can be configured via credentials.
 
-function mapAspectRatio(ratio: AspectRatio): any {
+function mapAspectRatio(ratio: AspectRatio): string {
   // Flux Schnell supports specific image size strings or custom dimensions
   switch (ratio) {
     case "1:1": return "square";
@@ -42,10 +42,12 @@ export async function generateFalImages(
   
   const tasks = Array.from({ length: count }).map(async (_, i) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result: any = await fal.subscribe(modelId, {
         input: {
           prompt: enhancedPrompt,
-          image_size: mapAspectRatio(req.aspectRatio),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          image_size: mapAspectRatio(req.aspectRatio) as any,
           num_inference_steps: 4, // Schnell is optimized for 4 steps
           enable_safety_checker: true,
           sync_mode: true,

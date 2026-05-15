@@ -11,7 +11,15 @@ import { PromptPanel } from "@/components/images/PromptPanel";
 import { ImageGrid } from "@/components/images/ImageGrid";
 import { GenerationHistory } from "@/components/images/GenerationHistory";
 
+import { useSubscription } from "@/hooks/use-subscription";
+import { UpgradeModal } from "@/components/dashboard/UpgradeModal";
+import { Loader2, Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 export default function ImagesPage() {
+  const { isPro, isLoading } = useSubscription();
+  const [showUpgrade, setShowUpgrade] = useState(false);
+
   // ─── Generation state ──────────────────────────────────────────────────────
   const [prompt, setPrompt] = useState("");
   const [style, setStyle] = useState<ImageStyle>("none");
@@ -23,6 +31,10 @@ export default function ImagesPage() {
 
   // ─── Generate ──────────────────────────────────────────────────────────────
   async function handleGenerate() {
+    if (!isPro) {
+      setShowUpgrade(true);
+      return;
+    }
     if (!prompt.trim() || loading) return;
 
     setLoading(true);
@@ -63,17 +75,50 @@ export default function ImagesPage() {
     );
   }
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+      </div>
+    );
+  }
+
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="max-w-7xl mx-auto h-full">
-      {/*
-        Layout:
-        ┌─────────────────┬──────────────────────────────┬──────────────────┐
-        │  Prompt Panel   │       Image Grid              │  History Panel   │
-        │  (left, fixed)  │       (center, grows)         │  (right, fixed)  │
-        └─────────────────┴──────────────────────────────┴──────────────────┘
-      */}
-      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_260px] gap-5 min-h-[calc(100vh-8rem)]">
+    <div className="max-w-7xl mx-auto h-full relative">
+      <UpgradeModal 
+        isOpen={showUpgrade} 
+        onClose={() => setShowUpgrade(false)} 
+        title="Pro Feature: Image Studio"
+        description="High-quality AI image generation is exclusive to Pro members. Upgrade now to start creating professional POD artwork."
+      />
+
+      {!isPro && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[2px] rounded-3xl pointer-events-none">
+          <div className="p-8 glass border-primary/20 rounded-3xl shadow-2xl flex flex-col items-center gap-4 text-center max-w-sm pointer-events-auto">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <Lock className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">Pro Feature</h3>
+              <p className="text-sm text-zinc-400 mt-1">
+                The AI Image Studio is part of our Pro plan. Upgrade to unlock unlimited high-res image generation.
+              </p>
+            </div>
+            <button 
+              onClick={() => setShowUpgrade(true)}
+              className="w-full py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary-600 transition-all"
+            >
+              Unlock Now
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className={cn(
+        "grid grid-cols-1 lg:grid-cols-[280px_1fr_260px] gap-5 min-h-[calc(100vh-8rem)]",
+        !isPro && "opacity-50 pointer-events-none blur-[1px]"
+      )}>
         {/* Left: Prompt & Controls */}
         <PromptPanel
           prompt={prompt}
@@ -102,3 +147,4 @@ export default function ImagesPage() {
     </div>
   );
 }
+

@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import { isProUser } from "@/lib/subscription";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export const runtime = "nodejs";
 
@@ -6,6 +9,26 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.1-8b-instant";
 
 export async function POST(request: Request) {
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const proUser = await isProUser();
+
+  // Usage check for Free users
+  if (!proUser) {
+    const { count } = await supabaseAdmin
+      .from("trend_saves")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
+
+    if ((count || 0) >= 3) {
+      return NextResponse.json(
+        { error: "Limit reached", message: "Free plan is limited to 3 trend research queries. Upgrade to Pro for unlimited market intelligence." },
+        { status: 403 }
+      );
+    }
+  }
+
   const apiKey = process.env.GROQ_API_KEY;
 
   if (!apiKey) {

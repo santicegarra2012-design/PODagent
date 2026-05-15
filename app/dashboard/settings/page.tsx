@@ -5,7 +5,6 @@ import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import {
   User,
-  Key,
   Bell,
   CreditCard,
   Loader2,
@@ -114,10 +113,41 @@ function ToggleRow({
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
+import { useEffect } from "react";
+
 export default function SettingsPage() {
   const { user, isLoaded } = useUser();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [subscription, setSubscription] = useState<any>(null); // Keeping any for dynamic DB objects for now but cleaned up imports
+  const [loadingPortal, setLoadingPortal] = useState(false);
 
-  if (!isLoaded) {
+  useEffect(() => {
+    fetch("/api/user/subscription")
+      .then((res) => res.json())
+      .then((data) => setSubscription(data));
+  }, []);
+
+  const handleManageBilling = async () => {
+    if (subscription?.plan === "free") {
+      window.location.assign("/#pricing");
+      return;
+    }
+
+    try {
+      setLoadingPortal(true);
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = await res.json();
+      if (data.url) {
+        window.location.assign(data.url);
+      }
+    } catch (error) {
+      console.error("Portal error:", error);
+    } finally {
+      setLoadingPortal(false);
+    }
+  };
+
+  if (!isLoaded || !subscription) {
     return (
       <div className="flex items-center justify-center py-32">
         <div className="flex items-center gap-2 text-zinc-400">
@@ -127,6 +157,8 @@ export default function SettingsPage() {
       </div>
     );
   }
+
+  const isPro = subscription.status === "active" || subscription.status === "trialing";
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
@@ -156,11 +188,6 @@ export default function SettingsPage() {
           defaultChecked
         />
         <ToggleRow
-          id="weekly-reports"
-          label="Weekly Reports"
-          description="Get a weekly summary of your activity"
-        />
-        <ToggleRow
           id="product-updates"
           label="Product Updates"
           description="Be notified about new features"
@@ -168,44 +195,40 @@ export default function SettingsPage() {
         />
       </SettingsSection>
 
-      {/* API Keys */}
-      <SettingsSection
-        icon={Key}
-        title="API Integrations"
-        description="Manage keys for external integrations"
-        delay={0.16}
-      >
-        <div className="flex items-center justify-between py-2">
-          <div>
-            <p className="text-sm text-zinc-300 font-medium">API Key</p>
-            <p className="text-xs text-zinc-600 font-mono mt-1">sk_live_••••••••••••••••</p>
-          </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-300 hover:bg-white/10 transition-colors">
-            Generate New
-            <ChevronRight className="w-3 h-3" />
-          </button>
-        </div>
-      </SettingsSection>
-
       {/* Billing */}
       <SettingsSection
         icon={CreditCard}
         title="Billing"
-        description="Manage your subscription"
-        delay={0.24}
+        description="Manage your subscription and payments"
+        delay={0.16}
       >
         <div className="flex items-center justify-between py-2">
           <div>
             <p className="text-sm text-zinc-300 font-medium">Current Plan</p>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium">
-                Pro
+              <span className={cn(
+                "text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border",
+                isPro ? "bg-primary/10 border-primary/20 text-primary" : "bg-white/5 border-white/10 text-zinc-500"
+              )}>
+                {subscription.plan === "pro" ? "Pro" : subscription.plan === "premium" ? "Premium" : "Free"}
               </span>
-              <span className="text-xs text-zinc-600">$19 / month</span>
+              <span className="text-xs text-zinc-600">
+                {subscription.plan === "pro" ? "$5.99 / month" : subscription.plan === "premium" ? "$9.99 / month" : "No active subscription"}
+              </span>
             </div>
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-300 hover:bg-white/10 transition-colors">
-            Manage
+          <button 
+            onClick={handleManageBilling}
+            disabled={loadingPortal}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-300 hover:bg-white/10 transition-colors disabled:opacity-50"
+          >
+            {loadingPortal ? (
+              <Loader2 className="w-3 h-3 animate-spin" />
+            ) : isPro ? (
+              "Manage Billing"
+            ) : (
+              "Upgrade Now"
+            )}
             <ChevronRight className="w-3 h-3" />
           </button>
         </div>

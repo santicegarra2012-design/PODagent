@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const plans = [
   {
@@ -14,44 +17,85 @@ const plans = [
       "5 AI SEO Generations/month",
       "Basic Trend Research",
       "Save up to 10 Projects",
-      "Community Support",
+      "Trademark Checker (Limited)",
     ],
     buttonText: "Get Started",
     popular: false,
+    priceId: null,
   },
   {
     name: "Pro",
-    price: "$19",
+    price: "$5.99",
     period: "/mo",
-    description: "For active sellers looking to scale.",
+    description: "Everything you need to dominate the market.",
     features: [
-      "100 AI SEO Generations/month",
-      "Advanced Etsy Analytics",
-      "Unlimited Projects",
-      "Competitor Tracking",
-      "Priority Email Support",
+      "Unlimited AI SEO Generations",
+      "Advanced Trend Research",
+      "AI Image Studio Access",
+      "Bulk Listing Optimizer",
+      "Priority AI Queue",
     ],
-    buttonText: "Start 14-day trial",
+    buttonText: "Upgrade to Pro",
     popular: true,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
   },
   {
     name: "Premium",
-    price: "$49",
+    price: "$9.99",
     period: "/mo",
-    description: "For established POD businesses.",
+    description: "For teams and established POD brands.",
     features: [
-      "Unlimited AI SEO Generations",
-      "API Access",
-      "AI Image Generation (Early Access)",
+      "Multi-user Support",
+      "Custom AI Fine-tuning",
+      "API Access for Bulk Ops",
       "Dedicated Account Manager",
-      "Custom Workflow Integrations",
     ],
-    buttonText: "Contact Sales",
+    buttonText: "Upgrade to Premium",
     popular: false,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ID,
   }
 ];
 
 export function Pricing() {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const handleAction = async (plan: typeof plans[0]) => {
+    if (plan.name === "Free") {
+      router.push(isSignedIn ? "/dashboard" : "/sign-up");
+      return;
+    }
+
+    if (!plan.priceId) {
+      alert("Please contact our sales team for this plan.");
+      return;
+    }
+
+    if (!isSignedIn) {
+      router.push("/sign-up");
+      return;
+    }
+
+    try {
+      setLoading(plan.name);
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: plan.priceId }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.assign(data.url);
+      }
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      alert("Failed to start checkout. Please try again.");
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <section id="pricing" className="py-24 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px] opacity-20 pointer-events-none" />
@@ -104,17 +148,21 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <Link
-                href="/sign-up"
+              <button
+                onClick={() => handleAction(plan)}
+                disabled={!!loading}
                 className={cn(
-                  "w-full py-3 px-6 rounded-full font-medium text-center transition-colors",
+                  "w-full py-4 px-6 rounded-2xl font-bold text-center transition-all flex items-center justify-center gap-2",
                   plan.popular 
-                    ? "bg-primary text-white hover:bg-primary-600" 
-                    : "bg-white/10 text-white hover:bg-white/20"
+                    ? "bg-primary text-white hover:bg-primary-600 shadow-lg shadow-primary/20" 
+                    : "bg-white/10 text-white hover:bg-white/20",
+                  loading === plan.name && "opacity-50 cursor-not-allowed"
                 )}
               >
-                {plan.buttonText}
-              </Link>
+                {loading === plan.name ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : plan.buttonText}
+              </button>
             </motion.div>
           ))}
         </div>

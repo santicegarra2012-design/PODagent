@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import { isProUser } from "@/lib/subscription";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export const runtime = "nodejs";
 
@@ -6,6 +9,26 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.1-8b-instant";
 
 export async function POST(request: Request) {
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const proUser = await isProUser();
+
+  // 0. Usage check for Free users
+  if (!proUser) {
+    const { count } = await supabaseAdmin
+      .from("projects") // Reuse projects table to count generations for simplicity in this demo
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
+
+    if ((count || 0) >= 5) {
+      return NextResponse.json(
+        { error: "Usage limit reached", message: "Free tier is limited to 5 generations. Upgrade to Pro for unlimited access." },
+        { status: 403 }
+      );
+    }
+  }
+
   const apiKey = process.env.GROQ_API_KEY;
 
   // 1. Log apiKey presence safely
