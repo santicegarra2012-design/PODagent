@@ -2,20 +2,11 @@
 
 import { motion } from "framer-motion";
 import { 
-  TrendingUp, 
-  Target, 
-  ShoppingBag, 
-  Hash, 
-  Video, 
-  Palette, 
   Bookmark,
   CheckCircle2,
-  AlertCircle,
-  BarChart3,
   Loader2,
   Calendar,
   Layers,
-  Search,
   Sparkles,
   ShieldAlert,
   ArrowRight

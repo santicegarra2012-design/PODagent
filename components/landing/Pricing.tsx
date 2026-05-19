@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -68,7 +69,7 @@ export function Pricing() {
     }
 
     if (!plan.priceId) {
-      alert("Please contact our sales team for this plan.");
+      toast.error("Please contact our sales team for this plan.");
       return;
     }
 
@@ -87,10 +88,12 @@ export function Pricing() {
       const data = await res.json();
       if (data.url) {
         window.location.assign(data.url);
+      } else {
+        toast.error("Failed to generate checkout link.");
       }
     } catch (error) {
       console.error("Checkout failed:", error);
-      alert("Failed to start checkout. Please try again.");
+      toast.error("Failed to start checkout. Please try again.");
     } finally {
       setLoading(null);
     }

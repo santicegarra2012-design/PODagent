@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { GeneratorPanel } from "@/components/dashboard/GeneratorPanel";
@@ -28,12 +29,12 @@ export default function DashboardPage() {
   // ─── Save project ─────────────────────────────────────────────────────────
   async function createProject() {
     if (!user) {
-      alert("Please sign in to save projects.");
+      toast.error("Please sign in to save projects.");
       return;
     }
 
     if (!seoResult || typeof seoResult !== "object" || !("title" in seoResult)) {
-      alert("Please generate SEO content first before saving.");
+      toast.error("Please generate SEO content first before saving.");
       return;
     }
 
@@ -54,14 +55,14 @@ export default function DashboardPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert("❌ Failed to save project\n\n" + (data.message || "Unknown error"));
+        toast.error("Failed to save project\n\n" + (data.message || "Unknown error"));
         return;
       }
 
-      alert("✅ Project saved to library!");
+      toast.success("Project saved to library!");
     } catch (error) {
       console.error("Error saving project:", error);
-      alert("❌ An unexpected error occurred while saving.");
+      toast.error("An unexpected error occurred while saving.");
     } finally {
       setIsSaving(false);
     }
@@ -70,7 +71,7 @@ export default function DashboardPage() {
   // ─── Generate SEO ─────────────────────────────────────────────────────────
   async function generateSEO(autoRetry: boolean = false) {
     if (!niche.trim()) {
-      alert("Please enter a niche");
+      toast.error("Please enter a niche");
       return;
     }
 
@@ -80,7 +81,7 @@ export default function DashboardPage() {
     const timeSinceLastRequest = now - lastRequestTime;
     if (timeSinceLastRequest < 1000 && !autoRetry) {
       const waitTime = Math.ceil((1000 - timeSinceLastRequest) / 1000);
-      alert(`⏰ Please wait ${waitTime} second${waitTime !== 1 ? "s" : ""} before making another request.`);
+      toast.error(`Please wait ${waitTime} second${waitTime !== 1 ? "s" : ""} before making another request.`);
       return;
     }
 
@@ -121,7 +122,7 @@ export default function DashboardPage() {
 
         const errorMessage = data?.message || data?.error || "SEO generation failed";
         setSeoResult(errorMessage);
-        alert("❌ Error\n\n" + errorMessage);
+        toast.error("Error\n\n" + errorMessage);
         return;
       }
 
@@ -141,7 +142,7 @@ export default function DashboardPage() {
       }
     } catch (error) {
       console.error(error);
-      alert("SEO generation failed");
+      toast.error("SEO generation failed");
     } finally {
       setLoading(false);
     }

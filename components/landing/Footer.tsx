@@ -24,20 +24,21 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-6">Product</h4>
             <ul className="space-y-4">
-              <li><Link href="#features" className="text-zinc-400 hover:text-white transition-colors">Features</Link></li>
-              <li><Link href="#pricing" className="text-zinc-400 hover:text-white transition-colors">Pricing</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">Changelog</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">Documentation</Link></li>
+              <li><Link href="/features" className="text-zinc-400 hover:text-white transition-colors">Features</Link></li>
+              <li><Link href="/pricing" className="text-zinc-400 hover:text-white transition-colors">Pricing</Link></li>
+              <li><Link href="/changelog" className="text-zinc-400 hover:text-white transition-colors">Changelog</Link></li>
+              <li><Link href="/docs" className="text-zinc-400 hover:text-white transition-colors">Documentation</Link></li>
+              <li><Link href="/roadmap" className="text-zinc-400 hover:text-white transition-colors">Roadmap</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold text-white mb-6">Company</h4>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">About</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">Blog</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link href="/support" className="text-zinc-400 hover:text-white transition-colors">Support</Link></li>
+              <li><Link href="/" className="text-zinc-400 hover:text-white transition-colors">Blog</Link></li>
+              <li><Link href="/" className="text-zinc-400 hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/" className="text-zinc-400 hover:text-white transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>

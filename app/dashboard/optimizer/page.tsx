@@ -4,22 +4,18 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Zap, 
-  Search, 
   Loader2, 
-  CheckCircle2, 
-  AlertTriangle, 
-  ChevronRight, 
   ArrowRight,
   Sparkles,
   RefreshCw,
   Copy,
   Save,
   ShieldAlert,
-  FileText,
   BarChart3,
   Lightbulb
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import { ScoreMeter } from "@/components/optimizer/ScoreMeter";
 import type { ListingData, OptimizationResults } from "@/lib/optimizer/types";
 
@@ -54,7 +50,7 @@ export default function OptimizerPage() {
       setResult(data);
     } catch (error) {
       console.error("Optimization failed:", error);
-      alert("Failed to optimize listing. Please try again.");
+      toast.error("Failed to optimize listing. Please try again.");
     } finally {
       setIsLoading(false);
     }

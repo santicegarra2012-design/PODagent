@@ -41,7 +41,7 @@ export async function POST(request: Request) {
   let body: { query?: string };
   try {
     body = await request.json();
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Invalid request body", message: "Body must be valid JSON." },
       { status: 400 }

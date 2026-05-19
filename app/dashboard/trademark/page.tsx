@@ -14,6 +14,7 @@ import {
 import { RiskIndicator } from "@/components/trademark/RiskIndicator";
 import type { TrademarkCheckResult } from "@/lib/trademark/types";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 import { useSubscription } from "@/hooks/use-subscription";
 import { UpgradeModal } from "@/components/dashboard/UpgradeModal";
@@ -48,7 +49,7 @@ export default function TrademarkPage() {
       setResult(data);
     } catch (error) {
       console.error("Check failed:", error);
-      alert("Failed to analyze trademark. Please try again.");
+      toast.error("Failed to analyze trademark. Please try again.");
     } finally {
       setIsLoading(false);
     }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import type {
   GeneratedImage,
   ImageStyle,
@@ -50,7 +51,7 @@ export default function ImagesPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        alert("❌ " + (data.message || "Image generation failed"));
+        toast.error(data.message || "Image generation failed");
         return;
       }
 
@@ -60,7 +61,7 @@ export default function ImagesPage() {
       setSessionImages((prev) => [newImages[0], ...prev].slice(0, 20));
     } catch (err) {
       console.error(err);
-      alert("❌ An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     } finally {
       setLoading(false);
     }

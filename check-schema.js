@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
 const env = fs.readFileSync('.env.local', 'utf8').split('\n').reduce((acc, line) => {
   const [key, ...val] = line.split('=');
@@ -20,6 +21,7 @@ async function checkSchema() {
     headers: { apikey: key, Authorization: `Bearer ${key}` }
   });
   const headers = optionsRes.headers;
-  console.log('OPTIONS status:', optionsRes.status);
+  // eslint-disable-next-line no-console
+  console.log('OPTIONS status:', optionsRes.status, 'Headers:', headers.get('content-type'));
 }
 checkSchema().catch(console.error);

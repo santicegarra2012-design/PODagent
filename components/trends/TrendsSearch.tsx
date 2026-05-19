@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Search, Sparkles, Loader2, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface TrendsSearchProps {

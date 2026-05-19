@@ -3,6 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   Search,
   Loader2,
@@ -10,8 +11,6 @@ import {
   BookOpen,
   Trash2,
   Copy,
-  Tag,
-  FileText,
   RefreshCw,
   SortAsc,
 } from "lucide-react";
@@ -33,7 +32,7 @@ function CopyBtn({ text, label }: { text: string | null; label: string }) {
 
   const handleCopy = () => {
     if (!text) {
-      alert(`No ${label} to copy.`);
+      toast.error(`No ${label} to copy.`);
       return;
     }
     navigator.clipboard.writeText(text);
@@ -110,7 +109,7 @@ export default function HistoryPage() {
 
       setProjects((prev) => prev.filter((p) => p.id !== id));
     } catch (err: unknown) {
-      alert("❌ Error: " + (err instanceof Error ? err.message : String(err)));
+      toast.error("Error: " + (err instanceof Error ? err.message : String(err)));
     }
   };
 
