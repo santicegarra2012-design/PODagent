@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       plan = "premium";
     }
 
-    await supabaseAdmin.from("subscriptions").upsert({
+    await getSupabaseAdmin().from("subscriptions").upsert({
       user_id: userId,
       stripe_customer_id: session.customer as string,
       stripe_subscription_id: subscription.id,
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       plan = "premium";
     }
 
-    await supabaseAdmin
+    await getSupabaseAdmin()
       .from("subscriptions")
       .update({
         status: subscription.status,

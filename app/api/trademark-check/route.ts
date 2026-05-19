@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { isProUser } from "@/lib/subscription";
 
 export const runtime = "nodejs";
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
     // Usage check for Free users
     if (!proUser) {
-      const { count } = await supabaseAdmin
+      const { count } = await getSupabaseAdmin()
         .from("trademark_checks")
         .select("*", { count: "exact", head: true })
         .eq("user_id", userId);
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     const result = JSON.parse(data.choices?.[0]?.message?.content || "{}");
 
     // 2. Save to Supabase
-    const { error: dbError } = await supabaseAdmin
+    const { error: dbError } = await getSupabaseAdmin()
       .from("trademark_checks")
       .insert([
         {

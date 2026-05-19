@@ -1,11 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
-import { supabaseAdmin } from "./supabase-admin";
+import { getSupabaseAdmin } from "./supabase-admin";
 
 export async function getSubscription() {
   const { userId } = await auth();
   if (!userId) return null;
 
-  const { data: subscription } = await supabaseAdmin
+  const { data: subscription } = await getSupabaseAdmin()
     .from("subscriptions")
     .select("*")
     .eq("user_id", userId)

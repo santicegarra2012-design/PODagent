@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { isProUser } from "@/lib/subscription";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 export const runtime = "nodejs";
 
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   // Usage check for Free users
   if (!proUser) {
-    const { count } = await supabaseAdmin
+    const { count } = await getSupabaseAdmin()
       .from("trend_saves")
       .select("*", { count: "exact", head: true })
       .eq("user_id", userId);

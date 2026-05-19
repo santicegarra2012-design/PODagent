@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
 import {
   FolderOpen,
@@ -34,7 +34,7 @@ export default function ProjectsPage() {
     async function loadProjects() {
       if (!user) return;
 
-      const { data, error } = await supabase
+      const { data, error } = await getSupabase()
         .from("projects")
         .select("*")
         .eq("user_id", user.id)

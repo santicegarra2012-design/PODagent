@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { generateFalImages } from "@/lib/ai/providers/fal";
 import { generateImages as generateMockImages } from "@/lib/ai/image-mock";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import type { GenerateImageRequest } from "@/lib/ai/image-types";
 
 // ─── POST /api/generate-image ─────────────────────────────────────────────────
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       created_at: new Date().toISOString()
     }));
 
-    const { error: dbError } = await supabaseAdmin
+    const { error: dbError } = await getSupabaseAdmin()
       .from("image_generations")
       .insert(records);
 
