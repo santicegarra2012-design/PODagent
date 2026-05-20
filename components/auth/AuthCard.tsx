@@ -21,7 +21,7 @@ export function AuthCard({ children }: { children: React.ReactNode }) {
       {/* Glow behind card */}
       <div className="absolute -inset-8 rounded-3xl bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:bg-violet-500/15" />
 
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-black/50 backdrop-blur-2xl transition-transform duration-300 hover:-translate-y-0.5 sm:p-10">
+      <div className="relative overflow-visible rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-black/50 backdrop-blur-2xl transition-transform duration-300 hover:-translate-y-0.5 sm:p-10">
         {/* Inner shine */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent" />
 

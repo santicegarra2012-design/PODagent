@@ -110,6 +110,29 @@ body {
 }
 
 /* Clerk form accessibility overrides */
-.cl-formFieldInput {
+.auth-clerk-root .cl-rootBox,
+.auth-clerk-root .cl-cardBox,
+.auth-clerk-root .cl-card,
+.auth-clerk-root .cl-main {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.auth-clerk-root .cl-formFieldInput {
   color-scheme: dark;
+}
+
+.auth-clerk-root .cl-formFieldInput,
+.auth-clerk-root input {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.auth-clerk-root .cl-headerTitle {
+  color: #ffffff !important;
+}
+
+.auth-clerk-root .cl-headerSubtitle,
+.auth-clerk-root .cl-footerActionText {
+  color: #94a3b8 !important;
 }

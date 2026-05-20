@@ -16,9 +16,9 @@ export const authClerkAppearance = {
     showOptionalFields: false,
   },
   elements: {
-    rootBox: "w-full",
-    cardBox: "w-full shadow-none",
-    card: "bg-transparent shadow-none border-none p-0 w-full gap-0",
+    rootBox: "w-full min-h-[360px] !opacity-100 !visible",
+    cardBox: "w-full shadow-none !opacity-100",
+    card: "bg-transparent shadow-none border-none p-0 w-full gap-0 !opacity-100",
     header: "mb-6 gap-2",
     headerTitle: "text-2xl font-bold text-white tracking-tight text-center w-full",
     headerSubtitle: "text-slate-400 text-[15px] leading-relaxed text-center w-full mt-1",
