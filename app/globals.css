@@ -78,3 +78,38 @@ body {
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
 }
+
+/* Auth page backgrounds */
+.auth-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 75%);
+}
+
+.auth-gradient-border {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.8),
+    rgba(139, 92, 246, 0.8),
+    rgba(34, 211, 238, 0.8)
+  );
+  background-size: 200% 200%;
+  animation: auth-border-shift 4s ease infinite;
+}
+
+@keyframes auth-border-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Clerk form accessibility overrides */
+.cl-formFieldInput {
+  color-scheme: dark;
+}
