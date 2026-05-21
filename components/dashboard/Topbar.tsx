@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { Menu, Sparkles } from "lucide-react";
+import { useSubscription } from "@/hooks/use-subscription";
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
   "/dashboard": { title: "AI Generator", subtitle: "Create market-ready SEO content for your POD products" },
@@ -22,6 +23,9 @@ interface TopbarProps {
 export function Topbar({ onMenuClick }: TopbarProps) {
   const pathname = usePathname();
   const page = pageTitles[pathname] ?? { title: "Dashboard", subtitle: "" };
+  const { subscription, isPro, isLoading } = useSubscription();
+
+  const planLabel = subscription?.plan === "premium" ? "Premium Plan" : isPro ? "Pro Plan" : "Free Plan";
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-6 bg-black/70 border-b border-white/10 backdrop-blur-xl">
@@ -41,9 +45,13 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs text-primary font-medium">
+        <div className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
+          isPro
+            ? "bg-primary/10 border-primary/20 text-primary"
+            : "bg-white/5 border-white/10 text-zinc-400"
+        }`}>
           <Sparkles className="w-3 h-3" />
-          Pro Plan
+          {isLoading ? "Loading Plan..." : planLabel}
         </div>
         <UserButton />
       </div>

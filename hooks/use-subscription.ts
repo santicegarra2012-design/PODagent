@@ -8,7 +8,7 @@ export function useSubscription() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/user/subscription")
+    fetch("/api/user/subscription", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         setSubscription(data);
