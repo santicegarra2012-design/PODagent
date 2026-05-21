@@ -152,7 +152,8 @@ export async function getSubscription() {
   }
 
   const storedSubscription = await getStoredSubscription(userId);
-  if (storedSubscription) {
+
+  if (storedSubscription && isPaidStatus(storedSubscription.status)) {
     return storedSubscription;
   }
 
@@ -160,10 +161,11 @@ export async function getSubscription() {
   const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress;
 
   if (!email) {
-    return null;
+    return storedSubscription;
   }
 
-  return syncSubscriptionFromStripe(userId, email);
+  const syncedSubscription = await syncSubscriptionFromStripe(userId, email);
+  return syncedSubscription ?? storedSubscription;
 }
 
 export async function isProUser() {

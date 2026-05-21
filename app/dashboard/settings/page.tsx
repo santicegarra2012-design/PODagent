@@ -159,6 +159,12 @@ export default function SettingsPage() {
   }
 
   const isPro = subscription.status === "active" || subscription.status === "trialing";
+  const planName = isPro ? (subscription.plan === "premium" ? "Premium" : "Pro") : "Free";
+  const planPrice = isPro
+    ? subscription.plan === "premium"
+      ? "$9.99 / month"
+      : "$5.99 / month"
+    : "No active subscription";
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
@@ -210,10 +216,10 @@ export default function SettingsPage() {
                 "text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border",
                 isPro ? "bg-primary/10 border-primary/20 text-primary" : "bg-white/5 border-white/10 text-zinc-500"
               )}>
-                {subscription.plan === "pro" ? "Pro" : subscription.plan === "premium" ? "Premium" : "Free"}
+                {planName}
               </span>
               <span className="text-xs text-zinc-600">
-                {subscription.plan === "pro" ? "$5.99 / month" : subscription.plan === "premium" ? "$9.99 / month" : "No active subscription"}
+                {planPrice}
               </span>
             </div>
           </div>
