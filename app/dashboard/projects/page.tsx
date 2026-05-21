@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { getSupabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
 import {
   FolderOpen,
@@ -15,56 +14,54 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-// ─── Type (unchanged) ─────────────────────────────────────────────────────────
 type Project = {
   id: string;
   niche: string;
   created_at: string;
 };
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ProjectsPage() {
   const { user, isLoaded } = useUser();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  // ─── Fetch (unchanged logic) ───────────────────────────────────────────────
   useEffect(() => {
     async function loadProjects() {
       if (!user) return;
 
-      const { data, error } = await getSupabase()
-        .from("projects")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+      try {
+        const res = await fetch("/api/projects");
+        const json = await res.json();
 
-      if (!error && data) {
-        setProjects(data);
+        if (!res.ok || !json.success) {
+          throw new Error(json.message || "Failed to load projects");
+        }
+
+        setProjects(json.data || []);
+      } catch (error) {
+        console.error("[projects-page] Failed to load projects:", error);
+      } finally {
+        setLoadingProjects(false);
       }
-      setLoadingProjects(false);
     }
 
     loadProjects();
   }, [user]);
 
-  // ─── Loading ───────────────────────────────────────────────────────────────
   if (!isLoaded || loadingProjects) {
     return (
       <div className="flex items-center justify-center py-32">
         <div className="flex items-center gap-2 text-zinc-400">
           <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm">Loading projects…</span>
+          <span className="text-sm">Loading projects...</span>
         </div>
       </div>
     );
   }
 
-  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* Toolbar */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 p-1 rounded-xl bg-white/5 border border-white/10">
           <button
@@ -96,7 +93,6 @@ export default function ProjectsPage() {
         </Link>
       </div>
 
-      {/* Empty State */}
       {projects.length === 0 && (
         <div className="glass border-white/10 rounded-2xl p-16 text-center">
           <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
@@ -114,7 +110,6 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {/* Grid view */}
       {projects.length > 0 && view === "grid" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((project, i) => (
@@ -137,7 +132,7 @@ export default function ProjectsPage() {
               </div>
               <div className="flex items-center gap-2 pt-3 border-t border-white/10">
                 <span className="text-[10px] px-2 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-green-400 font-medium">
-                  Active
+                  Saved
                 </span>
               </div>
             </motion.div>
@@ -145,7 +140,6 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {/* List view */}
       {projects.length > 0 && view === "list" && (
         <div className="glass border-white/10 rounded-2xl overflow-hidden">
           <div className="grid grid-cols-12 px-5 py-3 border-b border-white/10 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
@@ -172,7 +166,7 @@ export default function ProjectsPage() {
               </span>
               <div className="col-span-3">
                 <span className="text-[10px] px-2 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-green-400 font-medium">
-                  Active
+                  Saved
                 </span>
               </div>
             </motion.div>

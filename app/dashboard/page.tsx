@@ -1,24 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
+import { DataLibrary } from "@/components/dashboard/DataLibrary";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { GeneratorPanel } from "@/components/dashboard/GeneratorPanel";
 import { ResultsPanel } from "@/components/dashboard/ResultsPanel";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentProjects } from "@/components/dashboard/RecentProjects";
+import type { DashboardSummary } from "@/lib/dashboard/types";
 
-// ─── Types ───────────────────────────────────────────────────────────────────
 type SeoResult = { title: string; tags: string[]; description: string };
 
-// ─── Page ────────────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
-
+  const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [niche, setNiche] = useState("");
   const [seoResult, setSeoResult] = useState<string | SeoResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,27 @@ export default function DashboardPage() {
   const [seoRetryCountdown, setSeoRetryCountdown] = useState<number | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  // ─── Save project ─────────────────────────────────────────────────────────
+  useEffect(() => {
+    async function loadSummary() {
+      try {
+        const res = await fetch("/api/dashboard/summary");
+        const json = await res.json();
+
+        if (!res.ok || !json.success) {
+          throw new Error(json.message || "Failed to load dashboard summary");
+        }
+
+        setSummary(json.data);
+      } catch (error) {
+        console.error("[dashboard] Failed to load summary:", error);
+      }
+    }
+
+    if (isLoaded && user) {
+      loadSummary();
+    }
+  }, [isLoaded, user]);
+
   async function createProject() {
     if (!user) {
       toast.error("Please sign in to save projects.");
@@ -60,6 +80,18 @@ export default function DashboardPage() {
       }
 
       toast.success("Project saved to library!");
+      setSummary((prev) =>
+        prev
+          ? {
+              ...prev,
+              counts: {
+                ...prev.counts,
+                projects: prev.counts.projects + 1,
+              },
+              recentProjects: [data.data, ...prev.recentProjects].slice(0, 6),
+            }
+          : prev
+      );
     } catch (error) {
       console.error("Error saving project:", error);
       toast.error("An unexpected error occurred while saving.");
@@ -68,8 +100,7 @@ export default function DashboardPage() {
     }
   }
 
-  // ─── Generate SEO ─────────────────────────────────────────────────────────
-  async function generateSEO(autoRetry: boolean = false) {
+  async function generateSEO(autoRetry = false) {
     if (!niche.trim()) {
       toast.error("Please enter a niche");
       return;
@@ -96,7 +127,6 @@ export default function DashboardPage() {
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         if (response.status === 429 && data.retryDelay && !autoRetry) {
@@ -148,20 +178,29 @@ export default function DashboardPage() {
     }
   }
 
-  // ─── Copy all helper ──────────────────────────────────────────────────────
   function handleCopyAll() {
     if (!seoResult || typeof seoResult !== "object") return;
     const text = `TITLE:\n${seoResult.title}\n\nTAGS:\n${seoResult.tags.join(", ")}\n\nDESCRIPTION:\n${seoResult.description}`;
     navigator.clipboard.writeText(text);
   }
 
-  // ─── Loading gate ─────────────────────────────────────────────────────────
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center py-32">
         <div className="flex items-center gap-2 text-zinc-400">
           <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm">Loading…</span>
+          <span className="text-sm">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!summary) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <div className="flex items-center gap-2 text-zinc-400">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span className="text-sm">Loading dashboard data...</span>
         </div>
       </div>
     );
@@ -172,14 +211,11 @@ export default function DashboardPage() {
       ? (seoResult as SeoResult)
       : null;
 
-  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Stats */}
-      <StatsCards />
+      <StatsCards summary={summary} />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Left: Generator + Results */}
         <div className="xl:col-span-2 space-y-6">
           <GeneratorPanel
             niche={niche}
@@ -203,34 +239,9 @@ export default function DashboardPage() {
             )}
           </AnimatePresence>
 
-          {/* AI Image Generation Teaser */}
-          <AnimatePresence>
-            {structuredResult && !loading && (
-              <motion.div
-                key="image-teaser"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="glass border-white/10 rounded-2xl p-6 text-center"
-              >
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-pink-400/10 border border-pink-400/20 flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-pink-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-white mb-1">AI Image Generation</h4>
-                    <p className="text-xs text-zinc-500">Coming soon — generate product mockups with AI directly from your niche.</p>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-500 font-medium">
-                    Coming Soon
-                  </span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <DataLibrary summary={summary} />
         </div>
 
-        {/* Right: Sidebar panels */}
         <div className="space-y-4">
           <QuickActions
             onGenerate={() => generateSEO()}
@@ -239,7 +250,7 @@ export default function DashboardPage() {
             isSaving={isSaving}
             hasResult={!!structuredResult}
           />
-          <RecentProjects />
+          <RecentProjects projects={summary.recentProjects} />
         </div>
       </div>
     </div>

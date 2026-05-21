@@ -69,7 +69,7 @@ export default function TrademarkPage() {
         isOpen={showUpgrade} 
         onClose={() => setShowUpgrade(false)} 
         title="Pro Feature: Trademark Shield"
-        description="Our advanced trademark risk analysis system is exclusive to Pro members. Protect your shop from suspensions today."
+        description="Our AI trademark risk pre-screen is exclusive to Pro members. Use it to catch obvious issues before doing a final manual or legal review."
       />
 
       {!isPro && (
@@ -103,7 +103,7 @@ export default function TrademarkPage() {
           </div>
           <h1 className="text-3xl font-bold text-white">Trademark Checker</h1>
           <p className="text-zinc-500 text-sm max-w-lg">
-            Protect your POD business by scanning listing titles, keywords, and phrases for potential IP violations.
+            Use AI to pre-screen listing titles, keywords, and phrases for possible IP risk before you publish.
           </p>
         </div>
 
@@ -255,7 +255,7 @@ export default function TrademarkPage() {
             <div>
               <h4 className="text-white font-bold mb-1 text-lg">Why use Trademark Checker?</h4>
               <p className="text-zinc-500 text-sm leading-relaxed max-w-2xl">
-                Platforms like Etsy and Amazon use automated systems to detect trademarked names (like &quot;Nike&quot;, &quot;Marvel&quot;, or &quot;Swiftie&quot;). Using these without permission can lead to shop suspensions. Our AI helps you identify high-risk terms and suggests safe, high-converting alternatives.
+                Platforms like Etsy and Amazon can flag trademarked names like &quot;Nike&quot;, &quot;Marvel&quot;, or &quot;Swiftie&quot;. This tool gives you an AI pre-screen and safer wording ideas, but it is not a substitute for an official USPTO or legal review.
               </p>
             </div>
           </motion.div>

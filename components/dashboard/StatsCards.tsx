@@ -1,48 +1,53 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FolderOpen, Zap, TrendingUp, Sparkles } from "lucide-react";
+import { FolderOpen, ImageIcon, SearchCheck, ShieldCheck } from "lucide-react";
+import type { DashboardSummary } from "@/lib/dashboard/types";
 
-const stats = [
-  {
-    label: "Projects Saved",
-    value: "12",
-    icon: FolderOpen,
-    color: "text-blue-400",
-    bg: "bg-blue-400/10",
-    border: "border-blue-400/20",
-    change: "+3 this week",
-  },
-  {
-    label: "SEO Generations",
-    value: "48",
-    icon: Zap,
-    color: "text-purple-400",
-    bg: "bg-purple-400/10",
-    border: "border-purple-400/20",
-    change: "+12 today",
-  },
-  {
-    label: "Trending Niches",
-    value: "7",
-    icon: TrendingUp,
-    color: "text-green-400",
-    bg: "bg-green-400/10",
-    border: "border-green-400/20",
-    change: "Updated daily",
-  },
-  {
-    label: "AI Credits Left",
-    value: "142",
-    icon: Sparkles,
-    color: "text-orange-400",
-    bg: "bg-orange-400/10",
-    border: "border-orange-400/20",
-    change: "Resets monthly",
-  },
-];
+type StatsCardsProps = {
+  summary: DashboardSummary;
+};
 
-export function StatsCards() {
+export function StatsCards({ summary }: StatsCardsProps) {
+  const stats = [
+    {
+      label: "Projects Saved",
+      value: summary.counts.projects,
+      icon: FolderOpen,
+      color: "text-blue-400",
+      bg: "bg-blue-400/10",
+      border: "border-blue-400/20",
+      helper: "Saved SEO outputs",
+    },
+    {
+      label: "Trend Saves",
+      value: summary.counts.trendSaves,
+      icon: SearchCheck,
+      color: "text-emerald-400",
+      bg: "bg-emerald-400/10",
+      border: "border-emerald-400/20",
+      helper: "Research entries stored",
+    },
+    {
+      label: "Images Generated",
+      value: summary.counts.imageGenerations,
+      icon: ImageIcon,
+      color: "text-purple-400",
+      bg: "bg-purple-400/10",
+      border: "border-purple-400/20",
+      helper: "Real generated assets",
+    },
+    {
+      label: "Trademark Checks",
+      value: summary.counts.trademarkChecks,
+      icon: ShieldCheck,
+      color: "text-amber-400",
+      bg: "bg-amber-400/10",
+      border: "border-amber-400/20",
+      helper: "Saved compliance scans",
+    },
+  ];
+
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, i) => (
@@ -59,10 +64,10 @@ export function StatsCards() {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
+            <p className="text-2xl font-bold text-white">{stat.value.toLocaleString()}</p>
             <p className="text-xs text-zinc-400 mt-0.5">{stat.label}</p>
           </div>
-          <p className="text-xs text-zinc-600">{stat.change}</p>
+          <p className="text-xs text-zinc-600">{stat.helper}</p>
         </motion.div>
       ))}
     </div>
