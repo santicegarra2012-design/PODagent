@@ -21,7 +21,6 @@ async function checkSchema() {
     headers: { apikey: key, Authorization: `Bearer ${key}` }
   });
   const headers = optionsRes.headers;
-  // eslint-disable-next-line no-console
   console.log('OPTIONS status:', optionsRes.status, 'Headers:', headers.get('content-type'));
 }
 checkSchema().catch(console.error);

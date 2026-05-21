@@ -1,5 +1,3 @@
-"use client";
-
 import { AuthClerkForm } from "@/components/auth/AuthClerkForm";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 

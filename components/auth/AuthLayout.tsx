@@ -41,7 +41,7 @@ export function AuthLayout({ mode, children }: AuthLayoutProps) {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/30 transition-transform group-hover:scale-105">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">Merch Agent</span>
+              <span className="text-xl font-bold tracking-tight text-white">POD Agent</span>
             </Link>
           </motion.div>
 

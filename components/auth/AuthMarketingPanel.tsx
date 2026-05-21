@@ -30,7 +30,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/30 transition-transform duration-200 group-hover:scale-105">
             <Sparkles className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">Merch Agent</span>
+          <span className="text-xl font-bold tracking-tight text-white">POD Agent</span>
         </Link>
       </motion.div>
 
@@ -98,7 +98,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
         transition={{ delay: 0.5 }}
         className="text-sm text-slate-600"
       >
-        Trusted by print-on-demand creators worldwide
+        Trusted by print-on-demand sellers worldwide
       </motion.p>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth, SignInButton, UserButton } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { Sparkles } from "lucide-react";
 
 export function Navbar() {
@@ -37,11 +37,20 @@ export function Navbar() {
                   <UserButton />
                 </div>
               ) : (
-                <SignInButton mode="modal">
-                  <button className="text-sm font-medium bg-white text-black px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors">
+                <>
+                  <Link
+                    href="/sign-in"
+                    className="hidden sm:block text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="text-sm font-medium bg-white text-black px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors"
+                  >
                     Get Started
-                  </button>
-                </SignInButton>
+                  </Link>
+                </>
               )}
             </>
           )}

@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "POD Agent",
@@ -38,7 +35,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en" className="dark">
-        <body className={`${inter.className} bg-background text-foreground antialiased selection:bg-primary/30 min-h-screen flex flex-col`}>
+        <body className="bg-background text-foreground antialiased selection:bg-primary/30 min-h-screen flex flex-col">
           {children}
           <Toaster theme="dark" position="bottom-right" className="!bg-zinc-950 !border-white/10 !text-white" />
         </body>
