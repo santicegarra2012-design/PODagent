@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Check, Sparkles, Crown, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 
 const plans = [
@@ -69,7 +69,21 @@ const plans = [
 export function Pricing() {
   const { isSignedIn } = useUser();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState<string | null>(null);
+
+  // Show a message if user was redirected from canceled checkout
+  useEffect(() => {
+    if (searchParams.get("canceled") === "true") {
+      toast.info("Checkout canceled. No charges were made. Upgrade anytime you're ready.", {
+        duration: 5000,
+      });
+      // Clean up the URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("canceled");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParams]);
 
   const handleAction = async (plan: typeof plans[0]) => {
     if (plan.name === "Free") {

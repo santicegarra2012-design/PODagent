@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSubscription } from "@/hooks/use-subscription";
 
 // ─── Toggle Switch ─────────────────────────────────────────────────────────────
 function Toggle({
@@ -113,22 +114,13 @@ function ToggleRow({
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-import { useEffect } from "react";
-
 export default function SettingsPage() {
-  const { user, isLoaded } = useUser();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [subscription, setSubscription] = useState<any>(null); // Keeping any for dynamic DB objects for now but cleaned up imports
+  const { user, isLoaded: isUserLoaded } = useUser();
+  const { subscription, isPro, isLoading: isSubLoading, refresh: refreshSubscription } = useSubscription();
   const [loadingPortal, setLoadingPortal] = useState(false);
 
-  useEffect(() => {
-    fetch("/api/user/subscription")
-      .then((res) => res.json())
-      .then((data) => setSubscription(data));
-  }, []);
-
   const handleManageBilling = async () => {
-    if (subscription?.plan === "free") {
+    if (!isPro) {
       window.location.assign("/#pricing");
       return;
     }
@@ -147,7 +139,7 @@ export default function SettingsPage() {
     }
   };
 
-  if (!isLoaded || !subscription) {
+  if (!isUserLoaded || isSubLoading) {
     return (
       <div className="flex items-center justify-center py-32">
         <div className="flex items-center gap-2 text-zinc-400">
@@ -158,10 +150,14 @@ export default function SettingsPage() {
     );
   }
 
-  const isPro = subscription.status === "active" || subscription.status === "trialing";
-  const planName = isPro ? (subscription.plan === "premium" ? "Premium" : "Pro") : "Free";
+  const planName = isPro
+    ? subscription?.plan === "premium"
+      ? "Premium"
+      : "Pro"
+    : "Free";
+
   const planPrice = isPro
-    ? subscription.plan === "premium"
+    ? subscription?.plan === "premium"
       ? "$9.99 / month"
       : "$5.99 / month"
     : "No active subscription";

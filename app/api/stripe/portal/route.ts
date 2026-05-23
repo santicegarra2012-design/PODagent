@@ -13,11 +13,17 @@ export async function POST() {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { data: subscription } = await getSupabaseAdmin()
+    const { data: subscription, error: subError } = await getSupabaseAdmin()
       .from("subscriptions")
       .select("stripe_customer_id")
       .eq("user_id", userId)
-      .single();
+      .order("current_period_end", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (subError) {
+      console.error("[billing-portal] Failed to fetch subscription:", subError);
+    }
 
     if (!subscription?.stripe_customer_id) {
       return new NextResponse("No active subscription found", { status: 400 });

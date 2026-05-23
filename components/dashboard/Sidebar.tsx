@@ -18,6 +18,7 @@ import {
   PenTool,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSubscription } from "@/hooks/use-subscription";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -38,6 +39,13 @@ interface SidebarProps {
 function SidebarContent({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { user } = useUser();
+  const { subscription, isPro, isLoading } = useSubscription();
+
+  const planLabel = subscription?.plan === "premium"
+    ? "Premium Plan"
+    : isPro
+    ? "Pro Plan"
+    : "Free Plan";
 
   return (
     <div className="flex flex-col h-full">
@@ -107,7 +115,9 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
             <p className="text-sm font-medium text-white truncate">
               {user?.fullName ?? user?.emailAddresses?.[0]?.emailAddress ?? "User"}
             </p>
-            <p className="text-xs text-zinc-500 truncate">Pro Plan</p>
+            <p className="text-xs text-zinc-500 truncate">
+              {isLoading ? "Loading plan..." : planLabel}
+            </p>
           </div>
           <div className="w-2 h-2 rounded-full bg-green-400 shrink-0" />
         </div>

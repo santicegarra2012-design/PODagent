@@ -6,7 +6,7 @@ import { getStripe } from "./stripe";
 type SubscriptionRecord = {
   user_id: string;
   stripe_customer_id: string | null;
-  stripe_subscription_id: string;
+  stripe_subscription_id: string | null;
   stripe_price_id: string | null;
   status: string | null;
   plan: string | null;
@@ -15,6 +15,10 @@ type SubscriptionRecord = {
 
 function isPaidStatus(status: string | null | undefined) {
   return status === "active" || status === "trialing";
+}
+
+function isPendingStatus(status: string | null | undefined) {
+  return status === "pending" || status === "past_due" || status === "incomplete";
 }
 
 function getPlanFromPriceId(priceId: string | null | undefined) {
@@ -153,10 +157,17 @@ export async function getSubscription() {
 
   const storedSubscription = await getStoredSubscription(userId);
 
+  // If the stored subscription is already active/trialing, return immediately
   if (storedSubscription && isPaidStatus(storedSubscription.status)) {
     return storedSubscription;
   }
 
+  // If the subscription is pending (just paid, waiting for webhook), don't sync
+  if (storedSubscription && isPendingStatus(storedSubscription.status)) {
+    return storedSubscription;
+  }
+
+  // Try to sync from Stripe if we have an email (for reconciliation)
   const user = await currentUser();
   const email = user?.primaryEmailAddress?.emailAddress ?? user?.emailAddresses?.[0]?.emailAddress;
 
