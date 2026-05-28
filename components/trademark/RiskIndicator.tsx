@@ -50,7 +50,7 @@ export function RiskIndicator({ level }: RiskIndicatorProps) {
         glow
       )}
     >
-      <div className={cn("p-4 rounded-2xl bg-white/5 border border-white/10", color)}>
+      <div className={cn("p-4 rounded-2xl bg-white border border-slate-200", color)}>
         <Icon className="w-10 h-10" />
       </div>
       <div className="text-center">
@@ -58,7 +58,7 @@ export function RiskIndicator({ level }: RiskIndicatorProps) {
           Risk Analysis
         </p>
         <h3 className={cn("text-2xl font-black", color)}>{level}</h3>
-        <p className="text-zinc-400 text-sm mt-1 font-medium">{label}</p>
+        <p className="text-slate-500 text-sm mt-1 font-medium">{label}</p>
       </div>
     </motion.div>
   );

@@ -55,14 +55,13 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
           <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-primary" />
           </div>
-          <span className="font-bold text-[15px] tracking-tight text-white">
+          <span className="font-bold text-[15px] tracking-tight text-slate-900">
             POD Agent
           </span>
         </Link>
         {onClose && (
-          <button
-            onClick={onClose}
-            className="md:hidden text-zinc-400 hover:text-white transition-colors p-1"
+          <button            onClick={onClose}
+                className="md:hidden text-slate-400 hover:text-slate-900 transition-colors p-1"
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,14 +80,13 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group",
                 active
-                  ? "bg-white/10 text-white border border-white/10"
-                  : "text-zinc-400 hover:text-white hover:bg-white/5"
+                  ? "bg-primary/10 text-primary border border-primary/20"
+                  : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
               )}
             >
               <item.icon
                 className={cn(
-                  "w-4 h-4 shrink-0 transition-colors",
-                  active ? "text-primary" : "text-zinc-500 group-hover:text-zinc-300"
+                  "w-4 h-4 shrink-0 transition-colors",                    active ? "text-primary" : "text-slate-400 group-hover:text-slate-600"
                 )}
               />
               {item.label}
@@ -107,15 +105,15 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
 
       {/* User section */}
       <div className="p-3 mt-auto">
-        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-white/5 border border-white/10">
+        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-slate-50 border border-slate-200">
           <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-sm font-semibold text-primary shrink-0">
             {user?.firstName?.[0] ?? user?.emailAddresses?.[0]?.emailAddress?.[0]?.toUpperCase() ?? "U"}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-white truncate">
+            <p className="text-sm font-medium text-slate-900 truncate">
               {user?.fullName ?? user?.emailAddresses?.[0]?.emailAddress ?? "User"}
             </p>
-            <p className="text-xs text-zinc-500 truncate">
+            <p className="text-xs text-slate-500 truncate">
               {isLoading ? "Loading plan..." : planLabel}
             </p>
           </div>
@@ -130,7 +128,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-60 flex-col bg-black/80 border-r border-white/10 backdrop-blur-xl z-40">
+      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-60 flex-col bg-white/90 border-r border-slate-200 backdrop-blur-xl z-40">
         <SidebarContent />
       </aside>
 
@@ -143,14 +141,14 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              className="md:hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-40"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="md:hidden fixed left-0 top-0 h-screen w-72 bg-[#0a0a0a] border-r border-white/10 z-50 flex flex-col"
+              className="md:hidden fixed left-0 top-0 h-screen w-72 bg-white border-r border-slate-200 z-50 flex flex-col"
             >
               <SidebarContent onClose={onClose} />
             </motion.aside>

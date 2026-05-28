@@ -56,9 +56,9 @@ export function QuickActions({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
-      className="glass border-white/10 rounded-2xl p-5"
+      className="glass border-slate-200 rounded-2xl p-5"
     >
-      <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
         Quick Actions
       </h3>
       <div className="grid grid-cols-2 gap-2">
@@ -71,7 +71,7 @@ export function QuickActions({
               "flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all",
               action.variant === "primary"
                 ? "bg-primary text-white hover:bg-primary-600 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                : "bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+                : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed"
             )}
           >
             <action.icon className={cn("w-4 h-4 shrink-0", action.iconClass ?? "")} />

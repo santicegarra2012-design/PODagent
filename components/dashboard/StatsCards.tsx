@@ -56,7 +56,7 @@ export function StatsCards({ summary }: StatsCardsProps) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: i * 0.07 }}
-          className={`glass rounded-2xl p-5 border ${stat.border} flex flex-col gap-3 group hover:border-white/20 transition-colors`}
+          className={`glass rounded-2xl p-5 border ${stat.border} flex flex-col gap-3 group hover:border-slate-300 transition-colors`}
         >
           <div className="flex items-start justify-between">
             <div className={`p-2 rounded-xl ${stat.bg}`}>
@@ -64,10 +64,10 @@ export function StatsCards({ summary }: StatsCardsProps) {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-bold text-white">{stat.value.toLocaleString()}</p>
-            <p className="text-xs text-zinc-400 mt-0.5">{stat.label}</p>
+            <p className="text-2xl font-bold text-slate-900">{stat.value.toLocaleString()}</p>
+            <p className="text-xs text-slate-500 mt-0.5">{stat.label}</p>
           </div>
-          <p className="text-xs text-zinc-600">{stat.helper}</p>
+          <p className="text-xs text-slate-400">{stat.helper}</p>
         </motion.div>
       ))}
     </div>

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #000000;
-  --color-foreground: #ffffff;
+  --color-background: #f8fafc;
+  --color-foreground: #0f172a;
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
@@ -16,8 +16,8 @@
   --color-primary-950: #172554;
   --color-primary: var(--color-primary-500);
 
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-glass: rgba(255, 255, 255, 0.8);
 
   --animate-blob: blob 7s infinite;
   --animate-shine: shine 8s infinite linear;
@@ -48,8 +48,8 @@
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 body {
@@ -70,7 +70,7 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right, #ffffff, #a1a1aa);
+  background-image: linear-gradient(to right, #0f172a, #64748b);
 }
 
 @utility text-gradient-primary {
@@ -82,8 +82,8 @@ body {
 
 .auth-grid-bg {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 75%);
 }
@@ -118,20 +118,20 @@ body {
 }
 
 .auth-clerk-root .cl-formFieldInput {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 .auth-clerk-root .cl-formFieldInput,
 .auth-clerk-root input {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
 }
 
 .auth-clerk-root .cl-headerTitle {
-  color: #ffffff !important;
+  color: #0f172a !important;
 }
 
 .auth-clerk-root .cl-headerSubtitle,
 .auth-clerk-root .cl-footerActionText {
-  color: #94a3b8 !important;
+  color: #64748b !important;
 }

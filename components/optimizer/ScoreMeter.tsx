@@ -28,7 +28,7 @@ export function ScoreMeter({ score, label, size = "md" }: ScoreMeterProps) {
             cx="50%"
             cy="50%"
             r={radius}
-            className="stroke-white/5 fill-none"
+            className="stroke-slate-200 fill-none"
             strokeWidth="8"
           />
           {/* Progress circle */}
@@ -53,10 +53,10 @@ export function ScoreMeter({ score, label, size = "md" }: ScoreMeterProps) {
           >
             {score}
           </motion.span>
-          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1">Score</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Score</span>
         </div>
       </div>
-      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">{label}</span>
+      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{label}</span>
     </div>
   );
 }

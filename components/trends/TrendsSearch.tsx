@@ -34,10 +34,10 @@ export function TrendsSearch({ onSearch, isLoading }: TrendsSearchProps) {
         
         <form 
           onSubmit={handleSubmit}
-          className="relative glass border-white/10 rounded-2xl p-2 flex items-center gap-2"
+          className="relative glass border-slate-200 rounded-2xl p-2 flex items-center gap-2"
         >
           <div className="pl-4">
-            <Search className="w-5 h-5 text-zinc-500" />
+            <Search className="w-5 h-5 text-slate-400" />
           </div>
           
           <input
@@ -45,7 +45,7 @@ export function TrendsSearch({ onSearch, isLoading }: TrendsSearchProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for trending niches, aesthetics, or events…"
-            className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-zinc-500 text-base py-3"
+            className="flex-1 bg-transparent border-none focus:ring-0 text-slate-900 placeholder-slate-400 text-base py-3"
             disabled={isLoading}
           />
 
@@ -75,7 +75,7 @@ export function TrendsSearch({ onSearch, isLoading }: TrendsSearchProps) {
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
+        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
           <ArrowRight className="w-3 h-3" />
           Quick Ideas
         </span>
@@ -87,7 +87,7 @@ export function TrendsSearch({ onSearch, isLoading }: TrendsSearchProps) {
               onSearch(s);
             }}
             disabled={isLoading}
-            className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all disabled:opacity-50"
+            className="text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all disabled:opacity-50"
           >
             {s}
           </button>

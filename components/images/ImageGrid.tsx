@@ -17,14 +17,14 @@ function SkeletonGrid() {
           initial={{ opacity: 0 }}
           animate={{ opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.15 }}
-          className="aspect-square rounded-2xl bg-white/5 border border-white/10 overflow-hidden flex flex-col items-center justify-center gap-3"
+          className="aspect-square rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden flex flex-col items-center justify-center gap-3"
         >
           <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-primary/50" />
           </div>
           <div className="space-y-1.5 w-20">
-            <div className="h-1.5 rounded bg-white/10" />
-            <div className="h-1.5 rounded bg-white/5 w-3/4" />
+            <div className="h-1.5 rounded bg-slate-200" />
+            <div className="h-1.5 rounded bg-slate-100 w-3/4" />
           </div>
         </motion.div>
       ))}
@@ -44,8 +44,8 @@ function EmptyState() {
       <div className="w-20 h-20 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
         <ImageIcon className="w-9 h-9 text-primary/60" />
       </div>
-      <h3 className="text-lg font-semibold text-white mb-2">Your canvas awaits</h3>
-      <p className="text-sm text-zinc-500 max-w-xs">
+      <h3 className="text-lg font-semibold text-slate-900 mb-2">Your canvas awaits</h3>
+      <p className="text-sm text-slate-500 max-w-xs">
         Describe a design, choose your style, and hit Generate to create stunning POD artwork.
       </p>
     </motion.div>
@@ -87,7 +87,7 @@ function ImageCard({
       initial={{ opacity: 0, scale: 0.94 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="group relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-zinc-950"
+      className="group relative aspect-square rounded-2xl overflow-hidden border border-slate-200 bg-white"
     >
       <Image
         src={image.url}
@@ -103,7 +103,7 @@ function ImageCard({
 
       {/* Actions */}
       <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center justify-between opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-        <p className="text-[10px] text-zinc-300 truncate max-w-[60%]">{image.style}</p>
+        <p className="text-[10px] text-slate-200 truncate max-w-[60%]">{image.style}</p>
         <div className="flex items-center gap-1.5">
           <button
             onClick={handleFavorite}
@@ -150,20 +150,20 @@ export function ImageGrid({ images, loading, onFavorite, onRegenerate }: ImageGr
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className="glass border-white/10 rounded-2xl p-5 flex flex-col gap-4 h-full"
+      className="glass border-slate-200 rounded-2xl p-5 flex flex-col gap-4 h-full"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-white">Generated Images</h2>
+          <h2 className="text-sm font-semibold text-slate-900">Generated Images</h2>
           {images.length > 0 && (
-            <p className="text-xs text-zinc-500">{images.length} images created</p>
+            <p className="text-xs text-slate-500">{images.length} images created</p>
           )}
         </div>
         {images.length > 0 && !loading && (
           <button
             onClick={onRegenerate}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all"
           >
             <RefreshCw className="w-3 h-3" />
             Regenerate

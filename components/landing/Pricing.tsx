@@ -163,7 +163,7 @@ export function Pricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
-            className="text-lg text-zinc-400 max-w-2xl mx-auto"
+            className="text-lg text-slate-500 max-w-2xl mx-auto"
           >
             Start free, upgrade when you&apos;re ready. Cancel anytime.
           </motion.p>
@@ -182,7 +182,7 @@ export function Pricing() {
                 "relative flex flex-col rounded-3xl border transition-all duration-300",
                 plan.popular 
                   ? "border-primary/40 bg-gradient-to-b from-primary/[0.08] to-transparent shadow-2xl shadow-primary/10 scale-[1.02] md:-my-2"
-                  : "border-white/10 bg-white/[0.02] hover:bg-white/[0.04]",
+                  : "border-slate-200 bg-white hover:bg-slate-50",
                 plan.borderHover
               )}
             >
@@ -205,17 +205,17 @@ export function Pricing() {
                   )}>
                     <plan.icon className={cn(
                       "w-5 h-5",
-                      plan.popular ? "text-primary" : plan.name === "Premium" ? "text-purple-400" : "text-zinc-400"
+                      plan.popular ? "text-primary" : plan.name === "Premium" ? "text-purple-400" : "text-slate-400"
                     )} />
                   </div>
                   <h3 className="text-xl font-bold mb-1">{plan.name}</h3>
-                  <p className="text-zinc-500 text-sm">{plan.description}</p>
+                  <p className="text-slate-500 text-sm">{plan.description}</p>
                 </div>
 
                 {/* Price */}
                 <div className="mb-6 flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold tracking-tight">{plan.price}</span>
-                  {plan.period && <span className="text-zinc-500 font-medium text-sm">{plan.period}</span>}
+                  {plan.period && <span className="text-slate-500 font-medium text-sm">{plan.period}</span>}
                 </div>
 
                 {/* Features */}
@@ -224,14 +224,14 @@ export function Pricing() {
                     <li key={i} className="flex items-start gap-3 text-sm">
                       <div className={cn(
                         "w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5",
-                        plan.popular ? "bg-primary/20" : "bg-white/10"
+                        plan.popular ? "bg-primary/20" : "bg-slate-100"
                       )}>
                         <Check className={cn(
                           "w-3 h-3",
-                          plan.popular ? "text-primary" : "text-zinc-400"
+                          plan.popular ? "text-primary" : "text-slate-400"
                         )} />
                       </div>
-                      <span className="text-zinc-300">{feature}</span>
+                      <span className="text-slate-600">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -245,8 +245,8 @@ export function Pricing() {
                     plan.popular 
                       ? "bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25 hover:shadow-primary/40" 
                       : plan.name === "Premium"
-                        ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/20 text-white hover:from-purple-500/30 hover:to-pink-500/30"
-                        : "bg-white/5 border border-white/10 text-white hover:bg-white/10",
+                        ? "bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-purple-700 hover:from-purple-500/20 hover:to-pink-500/20"
+                        : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50",
                     loading === plan.name && "opacity-60 cursor-not-allowed"
                   )}
                 >
@@ -273,7 +273,7 @@ export function Pricing() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-center text-zinc-600 text-sm mt-10"
+          className="text-center text-slate-400 text-sm mt-10"
         >
           🔒 Powered by Stripe — secure, encrypted payments
         </motion.p>

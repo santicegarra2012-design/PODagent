@@ -116,14 +116,14 @@ export default function TrendsPage() {
       />
 
       {!isPro && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[2px] rounded-3xl pointer-events-none">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/40 backdrop-blur-[2px] rounded-3xl pointer-events-none">
           <div className="p-8 glass border-primary/20 rounded-3xl shadow-2xl flex flex-col items-center gap-4 text-center max-w-sm pointer-events-auto">
             <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
               <Lock className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Pro Access Required</h3>
-              <p className="text-sm text-zinc-400 mt-1">
+              <h3 className="text-xl font-bold text-slate-900">Pro Access Required</h3>
+              <p className="text-sm text-slate-500 mt-1">
                 Trend Research is a Pro feature. Upgrade to unlock AI niche discovery and saved research.
               </p>
             </div>
@@ -145,13 +145,13 @@ export default function TrendsPage() {
                 <Zap className="w-4 h-4" />
                 Trend Intelligence
               </div>
-              <h1 className="text-3xl font-bold text-white">Trend Research</h1>
-              <p className="text-zinc-500 text-sm max-w-md">
+              <h1 className="text-3xl font-bold text-slate-900">Trend Research</h1>
+              <p className="text-slate-500 text-sm max-w-md">
                 Generate AI research briefs for POD niches. Results are model-generated summaries unless backed by external market APIs.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+            <div className="flex items-center gap-2 text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-full">
               <BrainCircuit className="w-3.5 h-3.5" />
               AI Research Summary
             </div>
@@ -159,7 +159,7 @@ export default function TrendsPage() {
 
           <TrendsSearch onSearch={handleSearch} isLoading={isLoading} />
 
-          <div className="flex items-center gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl w-fit">
+          <div className="flex items-center gap-2 p-1 bg-slate-100 border border-slate-200 rounded-2xl w-fit">
             {PLATFORMS.map((platform) => (
               <button
                 key={platform}
@@ -168,7 +168,7 @@ export default function TrendsPage() {
                   "px-4 py-2 rounded-xl text-xs font-bold transition-all",
                   selectedPlatform === platform
                     ? "bg-primary text-white shadow-lg shadow-primary/20"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    : "text-slate-500 hover:text-slate-700"
                 )}
               >
                 {platform}
@@ -177,25 +177,25 @@ export default function TrendsPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-b border-white/5 pb-4">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="w-6 h-6 rounded-full bg-zinc-800 border-2 border-black" />
+                <div key={i} className="w-6 h-6 rounded-full bg-slate-200 border-2 border-white" />
               ))}
             </div>
-            <span className="text-xs text-zinc-500">
-              <span className="text-white font-bold">{filteredTrends.length} trends</span> shown for{" "}
+            <span className="text-xs text-slate-500">
+              <span className="text-slate-900 font-bold">{filteredTrends.length} trends</span> shown for{" "}
               {selectedPlatform === "All" ? "all platforms" : selectedPlatform}
             </span>
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors">
+            <button className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 transition-colors">
               <Star className="w-3.5 h-3.5" />
               Opportunity
             </button>
-            <button className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors">
+            <button className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 transition-colors">
               <History className="w-3.5 h-3.5" />
               Recent
             </button>
@@ -203,12 +203,12 @@ export default function TrendsPage() {
         </div>
 
         {!isLoading && filteredTrends.length === 0 && (
-          <div className="glass border-white/10 rounded-3xl p-12 text-center">
-            <SearchX className="w-10 h-10 text-zinc-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-white">
+          <div className="glass border-slate-200 rounded-3xl p-12 text-center">
+            <SearchX className="w-10 h-10 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900">
               {hasSearched ? "No trend results returned" : "Run a trend research prompt"}
             </h3>
-            <p className="text-sm text-zinc-500 mt-2 max-w-xl mx-auto">
+            <p className="text-sm text-slate-500 mt-2 max-w-xl mx-auto">
               {hasSearched
                 ? "Try a more specific niche, season, or audience to get more focused AI research results."
                 : "Search for a niche like 'retro fishing dads', 'back to school teacher humor', or 'minimalist gym motivation'."}
@@ -230,16 +230,16 @@ export default function TrendsPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center"
+              className="fixed inset-0 z-50 bg-white/60 backdrop-blur-sm flex items-center justify-center"
             >
-              <div className="bg-zinc-900/90 border border-white/10 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl">
+              <div className="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                 <div className="relative">
                   <Loader2 className="w-12 h-12 text-primary animate-spin" />
                   <Sparkles className="absolute -top-1 -right-1 w-5 h-5 text-primary animate-pulse" />
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-bold text-white">AI Analyst at work</p>
-                  <p className="text-sm text-zinc-500">Generating a niche research brief from your prompt...</p>
+                  <p className="text-lg font-bold text-slate-900">AI Analyst at work</p>
+                  <p className="text-sm text-slate-500">Generating a niche research brief from your prompt...</p>
                 </div>
               </div>
             </motion.div>

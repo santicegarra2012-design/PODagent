@@ -26,7 +26,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-zinc-400 hover:text-white"
+      className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all text-slate-500 hover:text-slate-900"
     >
       {copied ? (
         <>
@@ -60,25 +60,25 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
       animate="show"
       className="space-y-4"
     >
-      <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
         Generated Results
       </h3>
 
       {/* Title Card */}
       <motion.div
         variants={cardVariants}
-        className="glass border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors group"
+        className="glass border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-colors group"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-blue-400/10">
               <Type className="w-3.5 h-3.5 text-blue-400" />
             </div>
-            <span className="text-sm font-semibold text-white">Suggested Title</span>
+            <span className="text-sm font-semibold text-slate-900">Suggested Title</span>
           </div>
           <CopyButton text={result.title} />
         </div>
-        <p className="text-zinc-200 text-sm leading-relaxed bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+        <p className="text-slate-700 text-sm leading-relaxed bg-slate-50 rounded-xl px-4 py-3 border border-slate-200">
           {result.title}
         </p>
       </motion.div>
@@ -86,15 +86,15 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
       {/* Tags Card */}
       <motion.div
         variants={cardVariants}
-        className="glass border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors"
+        className="glass border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-colors"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-purple-400/10">
               <Tag className="w-3.5 h-3.5 text-purple-400" />
             </div>
-            <span className="text-sm font-semibold text-white">SEO Tags</span>
-            <span className="text-xs text-zinc-600 font-medium">({result.tags.length})</span>
+            <span className="text-sm font-semibold text-slate-900">SEO Tags</span>
+            <span className="text-xs text-slate-400 font-medium">({result.tags.length})</span>
           </div>
           <CopyButton text={result.tags.join(", ")} />
         </div>
@@ -110,30 +110,30 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
               </button>
             ))
           ) : (
-            <span className="text-zinc-600 text-sm">No tags generated</span>
+            <span className="text-slate-400 text-sm">No tags generated</span>
           )}
         </div>
         <div className="mt-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-blue-400/5 border border-blue-400/10">
           <Lightbulb className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-          <p className="text-xs text-zinc-500">Optimized for Etsy &amp; Redbubble algorithms</p>
+          <p className="text-xs text-slate-500">Optimized for Etsy &amp; Redbubble algorithms</p>
         </div>
       </motion.div>
 
       {/* Description Card */}
       <motion.div
         variants={cardVariants}
-        className="glass border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors"
+        className="glass border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-colors"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-green-400/10">
               <FileText className="w-3.5 h-3.5 text-green-400" />
             </div>
-            <span className="text-sm font-semibold text-white">Description</span>
+            <span className="text-sm font-semibold text-slate-900">Description</span>
           </div>
           <CopyButton text={result.description} />
         </div>
-        <p className="text-zinc-300 text-sm leading-relaxed">
+        <p className="text-slate-600 text-sm leading-relaxed">
           {result.description}
         </p>
       </motion.div>

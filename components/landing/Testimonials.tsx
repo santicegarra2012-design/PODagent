@@ -26,13 +26,13 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 relative bg-black/50 border-t border-white/5">
+    <section id="testimonials" className="py-24 relative bg-slate-50 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             Loved by <span className="text-gradient-primary">successful</span> sellers
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
             See how POD Agent is helping creators build profitable businesses.
           </p>
         </div>
@@ -53,7 +53,7 @@ export function Testimonials() {
                 ))}
               </div>
               
-              <p className="text-zinc-300 mb-8 flex-1 leading-relaxed">
+              <p className="text-slate-600 mb-8 flex-1 leading-relaxed">
                 &quot;{testimonial.content}&quot;
               </p>
               
@@ -62,8 +62,8 @@ export function Testimonials() {
                   {testimonial.avatar}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white">{testimonial.name}</h4>
-                  <p className="text-sm text-zinc-500">{testimonial.role}</p>
+                  <h4 className="font-semibold text-slate-900">{testimonial.name}</h4>
+                  <p className="text-sm text-slate-500">{testimonial.role}</p>
                 </div>
               </div>
             </motion.div>

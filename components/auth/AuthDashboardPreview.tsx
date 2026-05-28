@@ -19,21 +19,21 @@ export function AuthDashboardPreview() {
     >
       <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-blue-500/20 via-violet-500/10 to-cyan-500/20 blur-2xl" />
 
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-black/40 backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-violet-500/10"
+          className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-violet-500/5"
           animate={{ opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <div className="relative border-b border-white/10 px-5 py-4">
+        <div className="relative border-b border-slate-200 px-5 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/30">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">Merch Agent</p>
-              <p className="text-xs text-slate-400">AI Command Center</p>
+              <p className="text-sm font-semibold text-slate-900">Merch Agent</p>
+              <p className="text-xs text-slate-500">AI Command Center</p>
             </div>
             <div className="ml-auto flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
@@ -51,18 +51,18 @@ export function AuthDashboardPreview() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="rounded-xl border border-white/10 bg-slate-800/60 p-3"
+                className="rounded-xl border border-slate-200 bg-slate-50 p-3"
               >
                 <stat.icon className={`mb-2 h-4 w-4 ${stat.accent}`} />
-                <p className="text-lg font-bold text-white">{stat.value}</p>
-                <p className="text-[10px] leading-tight text-slate-500">{stat.label}</p>
+                <p className="text-lg font-bold text-slate-900">{stat.value}</p>
+                <p className="text-[10px] leading-tight text-slate-400">{stat.label}</p>
               </motion.div>
             ))}
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/40 p-4">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-400">Niche performance</span>
+              <span className="text-xs font-medium text-slate-500">Niche performance</span>
               <span className="rounded-full bg-cyan-500/15 px-2 py-0.5 text-[10px] font-semibold text-cyan-400">
                 Live
               </span>
@@ -82,8 +82,8 @@ export function AuthDashboardPreview() {
 
           <div className="flex items-center gap-3 rounded-xl border border-cyan-500/20 bg-cyan-500/5 px-4 py-3">
             <div className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
-            <p className="text-xs text-slate-300">
-              <span className="font-medium text-white">AI insight:</span> Retro gaming niche trending +34% this week
+            <p className="text-xs text-slate-600">
+              <span className="font-medium text-slate-900">AI insight:</span> Retro gaming niche trending +34% this week
             </p>
           </div>
         </div>

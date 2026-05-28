@@ -16,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={authClerkAppearance}>
-      <html lang="en" className="dark">
+      <html lang="en">
         <body className="bg-background text-foreground antialiased selection:bg-primary/30 min-h-screen flex flex-col">
           {children}
-          <Toaster theme="dark" position="bottom-right" className="!bg-zinc-950 !border-white/10 !text-white" />
+          <Toaster theme="light" position="bottom-right" />
         </body>
       </html>
     </ClerkProvider>

@@ -25,7 +25,7 @@ const scoreColors: Record<TrendScore, string> = {
   "Very High": "text-green-400 bg-green-400/10 border-green-400/20",
   "High": "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
   "Medium": "text-amber-400 bg-amber-400/10 border-amber-400/20",
-  "Low": "text-zinc-400 bg-zinc-400/10 border-zinc-400/20",
+  "Low": "text-slate-400 bg-slate-400/10 border-slate-400/20",
 };
 
 const competitionColors: Record<CompetitionLevel, string> = {
@@ -56,10 +56,10 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass border-white/10 rounded-2xl overflow-hidden group hover:border-white/20 transition-all duration-300 flex flex-col h-full"
+      className="glass border-slate-200 rounded-2xl overflow-hidden group hover:border-slate-300 transition-all duration-300 flex flex-col h-full"
     >
       {/* Header */}
-      <div className="p-6 border-b border-white/10 relative overflow-hidden flex-1">
+      <div className="p-6 border-b border-slate-200 relative overflow-hidden flex-1">
         <div className="absolute top-0 right-0 p-4">
           <button
             onClick={handleSave}
@@ -68,7 +68,7 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
               "p-2 rounded-xl transition-all",
               saved 
                 ? "bg-green-500/20 text-green-400 border border-green-500/30" 
-                : "bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/10"
+                : "bg-slate-50 text-slate-500 hover:text-slate-900 hover:bg-slate-100 border border-slate-200"
             )}
           >
             {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : saved ? <CheckCircle2 className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
@@ -91,19 +91,19 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
           </span>
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors pr-8">
+        <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors pr-8">
           {trend.niche}
         </h3>
-        <p className="text-sm text-zinc-500 leading-relaxed line-clamp-2 mb-4">
+        <p className="text-sm text-slate-500 leading-relaxed line-clamp-2 mb-4">
           {trend.reasoning}
         </p>
 
         {/* Platforms */}
         <div className="flex items-center gap-3">
-          <p className="text-[10px] text-zinc-600 uppercase font-bold tracking-widest">Targets</p>
+          <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Targets</p>
           <div className="flex items-center gap-1.5">
             {trend.platforms.map((p) => (
-              <span key={p} className="text-[10px] text-zinc-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+              <span key={p} className="text-[10px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
                 {p}
               </span>
             ))}
@@ -112,11 +112,11 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-2 bg-white/5 border-b border-white/10">
-        <div className="p-4 border-r border-white/10">
-          <p className="text-[10px] text-zinc-500 uppercase font-semibold mb-1">Competition</p>
+      <div className="grid grid-cols-2 bg-slate-50 border-b border-slate-200">
+        <div className="p-4 border-r border-slate-200">
+          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-1">Competition</p>
           <div className="flex items-center gap-1.5">
-            <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
               <div 
                 className={cn(
                   "h-full transition-all duration-1000",
@@ -132,15 +132,15 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
           </div>
         </div>
         <div className="p-4">
-          <p className="text-[10px] text-zinc-500 uppercase font-semibold mb-1">Product Ideas</p>
-          <p className="text-[10px] text-zinc-300 font-medium truncate">
+          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-1">Product Ideas</p>
+          <p className="text-[10px] text-slate-600 font-medium truncate">
             {trend.productIdeas.join(", ")}
           </p>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="p-4 grid grid-cols-2 gap-2 bg-black/20">
+      <div className="p-4 grid grid-cols-2 gap-2 bg-slate-100/50">
         <Link 
           href={`/dashboard?niche=${encodeURIComponent(trend.niche)}`}
           className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary hover:bg-primary/20 transition-all group/btn"
@@ -151,7 +151,7 @@ export function TrendCard({ trend, onSave }: TrendCardProps) {
         </Link>
         <Link 
           href={`/dashboard/trademark?keyword=${encodeURIComponent(trend.niche)}`}
-          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-zinc-400 hover:text-white hover:bg-white/10 transition-all group/btn"
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white border border-slate-200 text-[11px] font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group/btn"
         >
           <ShieldAlert className="w-3.5 h-3.5" />
           IP Check

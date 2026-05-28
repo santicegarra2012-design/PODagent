@@ -13,7 +13,7 @@ type AuthLayoutProps = {
 
 export function AuthLayout({ mode, children }: AuthLayoutProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#030712] text-slate-200">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-800">
       {/* Background layers */}
       <div className="pointer-events-none absolute inset-0 auth-grid-bg" aria-hidden />
       <div
@@ -22,9 +22,9 @@ export function AuthLayout({ mode, children }: AuthLayoutProps) {
       />
 
       {/* Gradient orbs */}
-      <div className="pointer-events-none absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-32 bottom-0 h-[500px] w-[500px] rounded-full bg-violet-600/15 blur-[120px]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 h-[500px] w-[500px] rounded-full bg-violet-500/8 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/5 blur-[100px]" />
 
       <div className="relative z-10 flex min-h-screen flex-col lg:flex-row">
         <AuthMarketingPanel mode={mode} />
@@ -41,7 +41,7 @@ export function AuthLayout({ mode, children }: AuthLayoutProps) {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/30 transition-transform group-hover:scale-105">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">POD Agent</span>
+              <span className="text-xl font-bold tracking-tight text-slate-900">POD Agent</span>
             </Link>
           </motion.div>
 

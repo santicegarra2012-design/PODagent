@@ -21,15 +21,15 @@ export function AuthCard({ children }: { children: React.ReactNode }) {
       {/* Glow behind card */}
       <div className="absolute -inset-8 rounded-3xl bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:bg-violet-500/15" />
 
-      <div className="relative overflow-visible rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-black/50 backdrop-blur-2xl transition-transform duration-300 hover:-translate-y-0.5 sm:p-10">
+      <div className="relative overflow-visible rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/10 transition-transform duration-300 hover:-translate-y-0.5 sm:p-10">
         {/* Inner shine */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-50 via-transparent to-transparent" />
 
         <div className="relative">{children}</div>
 
-        <div className="relative mt-8 flex items-center justify-center gap-2 border-t border-white/5 pt-6">
-          <Shield className="h-3.5 w-3.5 text-slate-500" aria-hidden />
-          <span className="text-xs font-medium text-slate-500 tracking-wide">
+        <div className="relative mt-8 flex items-center justify-center gap-2 border-t border-slate-100 pt-6">
+          <Shield className="h-3.5 w-3.5 text-slate-400" aria-hidden />
+          <span className="text-xs font-medium text-slate-400 tracking-wide">
             Secured by Clerk
           </span>
         </div>

@@ -24,7 +24,7 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
         />
         
         <motion.div
@@ -34,7 +34,7 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
           className="relative w-full max-w-lg glass border-primary/20 rounded-3xl overflow-hidden shadow-2xl"
         >
           <div className="absolute top-0 right-0 p-4">
-            <button onClick={onClose} className="p-2 text-zinc-500 hover:text-white transition-colors">
+            <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-900 transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -45,8 +45,8 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl font-bold text-white">{title || "Upgrade to Pro"}</h3>
-              <p className="text-zinc-400 text-sm">
+              <h3 className="text-2xl font-bold text-slate-900">{title || "Upgrade to Pro"}</h3>
+              <p className="text-slate-500 text-sm">
                 {description || "Unlock the full power of POD Agent with a Pro subscription."}
               </p>
             </div>
@@ -58,7 +58,7 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
                 "Bulk Listing Optimizer",
                 "Priority Support"
               ].map((feature) => (
-                <div key={feature} className="flex items-center gap-3 text-sm text-zinc-300">
+                <div key={feature} className="flex items-center gap-3 text-sm text-slate-600">
                   <Check className="w-4 h-4 text-primary" />
                   {feature}
                 </div>
@@ -73,7 +73,7 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
               Upgrade Now
             </button>
             
-            <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
               Secure payments by Stripe
             </p>
           </div>

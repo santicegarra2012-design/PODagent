@@ -81,7 +81,7 @@ function PaymentSuccessContent() {
   }, [sessionId, router]);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -90,13 +90,13 @@ function PaymentSuccessContent() {
       >
         {/* Verifying State */}
         {status === "verifying" && (
-          <div className="glass border-white/10 rounded-3xl p-8 text-center space-y-6">
+          <div className="glass border-slate-200 rounded-3xl p-8 text-center space-y-6">
             <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
               <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Verifying your payment...</h2>
-              <p className="text-sm text-zinc-400 mt-2">
+              <h2 className="text-xl font-bold text-slate-900">Verifying your payment...</h2>
+              <p className="text-sm text-slate-500 mt-2">
                 Please wait while we confirm your subscription.
               </p>
             </div>
@@ -130,8 +130,8 @@ function PaymentSuccessContent() {
             </motion.div>
 
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-white">Payment Successful! 🎉</h2>
-              <p className="text-zinc-400">
+              <h2 className="text-2xl font-bold text-slate-900">Payment Successful! 🎉</h2>
+              <p className="text-slate-500">
                 Welcome to{" "}
                 <span className="text-primary font-semibold">
                   {planName || "Pro"}
@@ -140,14 +140,14 @@ function PaymentSuccessContent() {
               </p>
             </div>
 
-            <div className="bg-white/5 rounded-2xl p-5 border border-white/10 space-y-3 text-left">
+            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3 text-left">
               {[
                 "Unlimited AI SEO Generations",
                 "Full Trend Research Suite",
                 "AI Image Studio Access",
                 "Bulk Listing Optimizer",
               ].map((feature) => (
-                <div key={feature} className="flex items-center gap-3 text-sm text-zinc-300">
+                <div key={feature} className="flex items-center gap-3 text-sm text-slate-700">
                   <CheckCircle className="w-4 h-4 text-green-400 shrink-0" />
                   {feature}
                 </div>
@@ -162,7 +162,7 @@ function PaymentSuccessContent() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
 
-            <p className="text-xs text-zinc-600">
+            <p className="text-xs text-slate-400">
               Redirecting to dashboard in a few seconds...
             </p>
           </motion.div>
@@ -175,8 +175,8 @@ function PaymentSuccessContent() {
               <Sparkles className="w-8 h-8 text-red-400" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Verification Needed</h2>
-              <p className="text-sm text-zinc-400 mt-2">
+              <h2 className="text-xl font-bold text-slate-900">Verification Needed</h2>
+              <p className="text-sm text-slate-500 mt-2">
                 We couldn&apos;t verify your payment automatically. Your subscription may still be processing.
               </p>
             </div>
@@ -195,13 +195,13 @@ function PaymentSuccessContent() {
               </button>
               <Link
                 href="/dashboard"
-                className="block w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 transition-all font-medium"
+                className="block w-full py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-all font-medium"
               >
                 Go to Dashboard
               </Link>
             </div>
             {sessionId && (
-              <p className="text-[10px] text-zinc-700 font-mono">
+              <p className="text-[10px] text-slate-400 font-mono">
                 Session: {sessionId.slice(0, 16)}...
               </p>
             )}
@@ -217,8 +217,8 @@ export default function PaymentSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-black flex items-center justify-center">
-          <div className="flex items-center gap-2 text-zinc-400">
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="flex items-center gap-2 text-slate-400">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span className="text-sm">Loading...</span>
           </div>

@@ -4,15 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
           "bg-gradient-to-r from-blue-500 via-blue-600 to-violet-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:brightness-110 active:scale-[0.98]",
         outline:
-          "border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/25",
-        ghost: "text-slate-300 hover:bg-white/5 hover:text-white",
+          "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300",
+        ghost: "text-slate-500 hover:bg-slate-100 hover:text-slate-900",
         link: "text-cyan-400 underline-offset-4 hover:underline",
       },
       size: {

@@ -27,22 +27,22 @@ export function GeneratorPanel({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.15 }}
-      className="glass rounded-2xl border-white/10 overflow-hidden"
+      className="glass rounded-2xl border-slate-200 overflow-hidden"
     >
       {/* Panel header */}
-      <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3">
+      <div className="px-6 py-5 border-b border-slate-200 flex items-center gap-3">
         <div className="p-2 rounded-xl bg-primary/10 border border-primary/20">
           <Sparkles className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-white">AI SEO Generator</h2>
-          <p className="text-xs text-zinc-500">Enter a niche to generate titles, tags &amp; descriptions</p>
+          <h2 className="text-sm font-semibold text-slate-900">AI SEO Generator</h2>
+          <p className="text-xs text-slate-500">Enter a niche to generate titles, tags &amp; descriptions</p>
         </div>
       </div>
 
       {/* Input area */}
       <div className="px-6 py-6">
-        <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wider">
+        <label className="block text-xs font-medium text-slate-500 mb-2 uppercase tracking-wider">
           Niche / Theme
         </label>
         <div className="flex flex-col sm:flex-row gap-3">
@@ -54,7 +54,7 @@ export function GeneratorPanel({
               onKeyDown={(e) => e.key === "Enter" && !isBusy && onGenerate()}
               placeholder="e.g., Retro 80s Cyberpunk Cats"
               disabled={isBusy}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all disabled:opacity-50"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all disabled:opacity-50"
             />
           </div>
           <button
@@ -112,13 +112,13 @@ export function GeneratorPanel({
             ) : (
               <div className="rounded-xl p-4 bg-primary/10 border border-primary/20">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-zinc-400 font-medium flex items-center gap-1.5">
+                  <span className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
                     Analyzing niche trends…
                   </span>
                   <span className="text-xs font-bold text-primary">Processing</span>
                 </div>
-                <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-primary rounded-full"
                     initial={{ x: "-100%" }}

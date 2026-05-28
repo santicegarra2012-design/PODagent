@@ -95,14 +95,14 @@ export default function ImagesPage() {
       />
 
       {!isPro && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[2px] rounded-3xl pointer-events-none">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/40 backdrop-blur-[2px] rounded-3xl pointer-events-none">
           <div className="p-8 glass border-primary/20 rounded-3xl shadow-2xl flex flex-col items-center gap-4 text-center max-w-sm pointer-events-auto">
             <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
               <Lock className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Pro Feature</h3>
-              <p className="text-sm text-zinc-400 mt-1">
+              <h3 className="text-xl font-bold text-slate-900">Pro Feature</h3>
+              <p className="text-sm text-slate-500 mt-1">
                 The AI Image Studio is part of our Pro plan. Upgrade to unlock unlimited high-res image generation.
               </p>
             </div>

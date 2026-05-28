@@ -73,14 +73,14 @@ export default function TrademarkPage() {
       />
 
       {!isPro && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[2px] rounded-3xl pointer-events-none">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-slate-900/5 backdrop-blur-[2px] rounded-3xl pointer-events-none">
           <div className="p-8 glass border-primary/20 rounded-3xl shadow-2xl flex flex-col items-center gap-4 text-center max-w-sm pointer-events-auto">
             <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
               <Lock className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Unlock Safety Shield</h3>
-              <p className="text-sm text-zinc-400 mt-1">
+              <h3 className="text-xl font-bold text-slate-900">Unlock Safety Shield</h3>
+              <p className="text-sm text-slate-500 mt-1">
                 Trademark risk analysis is a Pro feature. Upgrade to verify your listings and avoid potential bans.
               </p>
             </div>
@@ -101,8 +101,8 @@ export default function TrademarkPage() {
             <ShieldCheck className="w-4 h-4" />
             Safety First
           </div>
-          <h1 className="text-3xl font-bold text-white">Trademark Checker</h1>
-          <p className="text-zinc-500 text-sm max-w-lg">
+          <h1 className="text-3xl font-bold text-slate-900">Trademark Checker</h1>
+          <p className="text-slate-500 text-sm max-w-lg">
             Use AI to pre-screen listing titles, keywords, and phrases for possible IP risk before you publish.
           </p>
         </div>
@@ -113,10 +113,10 @@ export default function TrademarkPage() {
           
           <form 
             onSubmit={handleCheck}
-            className="relative glass border-white/10 rounded-2xl p-2 flex items-center gap-2"
+            className="relative glass border-slate-200 rounded-2xl p-2 flex items-center gap-2"
           >
             <div className="pl-4">
-              <Search className="w-5 h-5 text-zinc-500" />
+              <Search className="w-5 h-5 text-slate-400" />
             </div>
             
             <input
@@ -124,7 +124,7 @@ export default function TrademarkPage() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="Enter phrase (e.g., 'Retro Nike Style' or 'Disney Dad')…"
-              className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-zinc-500 text-base py-4"
+              className="flex-1 bg-transparent border-none focus:ring-0 text-slate-900 placeholder-slate-400 text-base py-4"
               disabled={isLoading}
             />
 
@@ -153,12 +153,12 @@ export default function TrademarkPage() {
         {/* Quick Suggestions */}
         {!result && !isLoading && (
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">Try Examples:</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Try Examples:</span>
             {["Disney Dad", "Retro Nike parody", "Funny Cat Shirt"].map((s) => (
               <button
                 key={s}
                 onClick={() => { setKeyword(s); setTimeout(() => handleCheck(), 10); }}
-                className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
+                className="text-xs px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
               >
                 {s}
               </button>
@@ -181,18 +181,18 @@ export default function TrademarkPage() {
               {/* Right: Detailed Analysis */}
               <div className="space-y-6">
                 {/* Explanation */}
-                <div className="glass border-white/10 rounded-3xl p-6">
-                  <div className="flex items-center gap-2 mb-4 text-zinc-400">
+                <div className="glass border-slate-200 rounded-3xl p-6">
+                  <div className="flex items-center gap-2 mb-4 text-slate-500">
                     <Info className="w-4 h-4" />
                     <span className="text-xs font-bold uppercase tracking-wider">Analysis Detail</span>
                   </div>
-                  <p className="text-zinc-300 leading-relaxed">
+                  <p className="text-slate-600 leading-relaxed">
                     {result.explanation}
                   </p>
 
                   {result.flaggedTerms.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-white/5">
-                      <p className="text-[11px] font-bold text-zinc-500 uppercase mb-2">Flagged Terms</p>
+                    <div className="mt-4 pt-4 border-t border-slate-100">
+                      <p className="text-[11px] font-bold text-slate-500 uppercase mb-2">Flagged Terms</p>
                       <div className="flex flex-wrap gap-2">
                         {result.flaggedTerms.map((term) => (
                           <span key={term} className="px-2 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold">
@@ -206,14 +206,14 @@ export default function TrademarkPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Alternatives */}
-                  <div className="glass border-white/10 rounded-3xl p-6">
+                  <div className="glass border-slate-200 rounded-3xl p-6">
                     <div className="flex items-center gap-2 mb-4 text-emerald-400">
                       <Lightbulb className="w-4 h-4" />
                       <span className="text-xs font-bold uppercase tracking-wider">Safer Alternatives</span>
                     </div>
                     <ul className="space-y-3">
                       {result.safeAlternatives.map((alt, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-zinc-400 group cursor-pointer hover:text-white transition-colors">
+                        <li key={i} className="flex items-center gap-2 text-sm text-slate-600 group cursor-pointer hover:text-slate-900 transition-colors">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                           {alt}
                         </li>
@@ -222,14 +222,14 @@ export default function TrademarkPage() {
                   </div>
 
                   {/* Compliance Tips */}
-                  <div className="glass border-white/10 rounded-3xl p-6">
+                  <div className="glass border-slate-200 rounded-3xl p-6">
                     <div className="flex items-center gap-2 mb-4 text-primary">
                       <AlertTriangle className="w-4 h-4" />
                       <span className="text-xs font-bold uppercase tracking-wider">Compliance Tips</span>
                     </div>
                     <ul className="space-y-3">
                       {result.complianceTips.map((tip, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-zinc-500 leading-relaxed">
+                        <li key={i} className="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
                           <span className="text-primary mt-1">•</span>
                           {tip}
                         </li>
@@ -253,8 +253,8 @@ export default function TrademarkPage() {
               <ShieldCheck className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h4 className="text-white font-bold mb-1 text-lg">Why use Trademark Checker?</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed max-w-2xl">
+              <h4 className="text-slate-900 font-bold mb-1 text-lg">Why use Trademark Checker?</h4>
+              <p className="text-slate-500 text-sm leading-relaxed max-w-2xl">
                 Platforms like Etsy and Amazon can flag trademarked names like &quot;Nike&quot;, &quot;Marvel&quot;, or &quot;Swiftie&quot;. This tool gives you an AI pre-screen and safer wording ideas, but it is not a substitute for an official USPTO or legal review.
               </p>
             </div>

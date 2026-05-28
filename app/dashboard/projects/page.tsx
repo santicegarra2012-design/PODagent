@@ -52,9 +52,9 @@ export default function ProjectsPage() {
   if (!isLoaded || loadingProjects) {
     return (
       <div className="flex items-center justify-center py-32">
-        <div className="flex items-center gap-2 text-zinc-400">
+        <div className="flex items-center gap-2 text-slate-500">
           <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm">Loading projects...</span>
+          <span className="text-sm">Loading projects…</span>
         </div>
       </div>
     );
@@ -63,12 +63,12 @@ export default function ProjectsPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2 p-1 rounded-xl bg-white/5 border border-white/10">
+        <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-50 border border-slate-200">
           <button
             onClick={() => setView("grid")}
             className={cn(
               "p-1.5 rounded-lg transition-colors",
-              view === "grid" ? "bg-white/10 text-white" : "text-zinc-500 hover:text-zinc-300"
+              view === "grid" ? "bg-slate-200 text-slate-900" : "text-slate-500 hover:text-slate-700"
             )}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -77,7 +77,7 @@ export default function ProjectsPage() {
             onClick={() => setView("list")}
             className={cn(
               "p-1.5 rounded-lg transition-colors",
-              view === "list" ? "bg-white/10 text-white" : "text-zinc-500 hover:text-zinc-300"
+              view === "list" ? "bg-slate-200 text-slate-900" : "text-slate-500 hover:text-slate-700"
             )}
           >
             <LayoutList className="w-4 h-4" />
@@ -94,12 +94,12 @@ export default function ProjectsPage() {
       </div>
 
       {projects.length === 0 && (
-        <div className="glass border-white/10 rounded-2xl p-16 text-center">
+        <div className="glass border-slate-200 rounded-2xl p-16 text-center">
           <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
             <FolderOpen className="w-7 h-7 text-primary" />
           </div>
-          <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
-          <p className="text-zinc-500 mb-6 text-sm">Create your first project to get started.</p>
+          <h3 className="text-xl font-semibold text-slate-900 mb-2">No projects yet</h3>
+          <p className="text-slate-500 mb-6 text-sm">Create your first project to get started.</p>
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-600 transition-colors shadow-lg shadow-primary/25"
@@ -118,19 +118,19 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: i * 0.05 }}
-              className="glass border-white/10 rounded-2xl p-5 flex flex-col gap-4 group hover:border-white/20 transition-all"
+              className="glass border-slate-200 rounded-2xl p-5 flex flex-col gap-4 group hover:border-slate-300 transition-all"
             >
               <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <FolderOpen className="w-4 h-4 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="text-sm font-semibold text-white mb-1">{project.niche}</h3>
-                <div className="flex items-center gap-1.5 text-zinc-600 text-[11px]">
+                <h3 className="text-sm font-semibold text-slate-900 mb-1">{project.niche}</h3>
+                <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
                   <Calendar className="w-3 h-3" />
                   {new Date(project.created_at).toLocaleDateString()}
                 </div>
               </div>
-              <div className="flex items-center gap-2 pt-3 border-t border-white/10">
+              <div className="flex items-center gap-2 pt-3 border-t border-slate-200">
                 <span className="text-[10px] px-2 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-green-400 font-medium">
                   Saved
                 </span>
@@ -141,8 +141,8 @@ export default function ProjectsPage() {
       )}
 
       {projects.length > 0 && view === "list" && (
-        <div className="glass border-white/10 rounded-2xl overflow-hidden">
-          <div className="grid grid-cols-12 px-5 py-3 border-b border-white/10 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+        <div className="glass border-slate-200 rounded-2xl overflow-hidden">
+          <div className="grid grid-cols-12 px-5 py-3 border-b border-slate-200 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
             <span className="col-span-6">Project</span>
             <span className="col-span-3">Created</span>
             <span className="col-span-3">Status</span>
@@ -153,15 +153,15 @@ export default function ProjectsPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.04 }}
-              className="grid grid-cols-12 px-5 py-4 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors items-center"
+              className="grid grid-cols-12 px-5 py-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors items-center"
             >
               <div className="col-span-6 flex items-center gap-3">
                 <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                   <FolderOpen className="w-3.5 h-3.5 text-primary" />
                 </div>
-                <span className="text-sm text-white font-medium truncate">{project.niche}</span>
+                <span className="text-sm text-slate-900 font-medium truncate">{project.niche}</span>
               </div>
-              <span className="col-span-3 text-xs text-zinc-500">
+              <span className="col-span-3 text-xs text-slate-500">
                 {new Date(project.created_at).toLocaleDateString()}
               </span>
               <div className="col-span-3">

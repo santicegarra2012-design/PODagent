@@ -30,7 +30,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/30 transition-transform duration-200 group-hover:scale-105">
             <Sparkles className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">POD Agent</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900">POD Agent</span>
         </Link>
       </motion.div>
 
@@ -62,7 +62,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
               </>
             )}
           </h1>
-          <p className="text-lg text-slate-400 leading-relaxed max-w-md">
+          <p className="text-lg text-slate-500 leading-relaxed max-w-md">
             {isSignIn
               ? "Pick up where you left off. Your trends, listings, and insights are ready."
               : "Join creators using AI to find winning niches, optimize listings, and scale faster."}
@@ -81,7 +81,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 + i * 0.08 }}
-              className="flex items-center gap-3 text-slate-300"
+              className="flex items-center gap-3 text-slate-700"
             >
               <CheckCircle2 className="h-5 w-5 shrink-0 text-cyan-400" />
               <span className="text-[15px]">{feature}</span>
@@ -96,7 +96,7 @@ export function AuthMarketingPanel({ mode }: AuthMarketingPanelProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-slate-600"
+        className="text-sm text-slate-400"
       >
         Trusted by print-on-demand sellers worldwide
       </motion.p>

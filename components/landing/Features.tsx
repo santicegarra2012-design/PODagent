@@ -50,7 +50,7 @@ export function Features() {
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             Everything you need to <span className="text-gradient-primary">scale</span>
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
             Powerful tools designed specifically for Print-on-Demand sellers to save time and increase sales.
           </p>
         </div>
@@ -73,14 +73,14 @@ export function Features() {
                     <feature.icon className={`w-6 h-6 ${feature.color}`} />
                   </div>
                   {feature.badge && (
-                    <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-zinc-300">
+                    <span className="px-3 py-1 rounded-full bg-slate-100 text-xs font-medium text-slate-600">
                       {feature.badge}
                     </span>
                   )}
                 </div>
                 
-                <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
-                <p className="text-zinc-400 leading-relaxed flex-1">
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">{feature.title}</h3>
+                <p className="text-slate-500 leading-relaxed flex-1">
                   {feature.description}
                 </p>
               </div>
