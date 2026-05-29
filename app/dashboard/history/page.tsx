@@ -259,7 +259,7 @@ export default function HistoryPage() {
                     </span>
                   ))}
                   {project.tags.length > 4 && (
-                    <span className="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-400 text-[10px]"
+                    <span className="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-400 text-[10px]">
                       +{project.tags.length - 4}
                     </span>
                   )}

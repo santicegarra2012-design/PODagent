@@ -6,6 +6,24 @@ import Stripe from "stripe";
 
 export const dynamic = "force-dynamic";
 
+interface StripeSubscriptionWithPeriod {
+  id: string;
+  status: string;
+  customer: string | Stripe.Customer | Stripe.DeletedCustomer;
+  current_period_end?: number;
+  items: {
+    data: Array<{
+      price?: {
+        id?: string;
+      };
+    }>;
+  };
+}
+
+function getCurrentPeriodEnd(subscription: StripeSubscriptionWithPeriod) {
+  return subscription.current_period_end ? new Date(subscription.current_period_end * 1000).toISOString() : null;
+}
+
 export async function POST(req: Request) {
   const body = await req.text();
   const signature = (await headers()).get("Stripe-Signature") as string;
@@ -60,9 +78,9 @@ export async function POST(req: Request) {
       }
 
       // Retrieve the subscription from Stripe
-      const subscription = await stripe.subscriptions.retrieve(
+      const subscription = (await stripe.subscriptions.retrieve(
         subscriptionId as string
-      );
+      )) as unknown as StripeSubscriptionWithPeriod;
 
       const priceId = subscription.items.data[0]?.price?.id || null;
       let plan = "pro";
@@ -103,9 +121,7 @@ export async function POST(req: Request) {
             stripe_price_id: priceId,
             status: subscription.status,
             plan: plan,
-            current_period_end: new Date(
-              (subscription.current_period_end as number) * 1000
-            ).toISOString(),
+            current_period_end: getCurrentPeriodEnd(subscription),
             updated_at: new Date().toISOString(),
           },
           { onConflict: "user_id" }
@@ -121,7 +137,7 @@ export async function POST(req: Request) {
 
     // ─── Handle customer.subscription.updated ───────────────────────────────
     if (event.type === "customer.subscription.updated") {
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as unknown as StripeSubscriptionWithPeriod;
 
       console.log(`[stripe-webhook] Subscription updated: ${subscription.id}, status: ${subscription.status}`);
 
@@ -151,9 +167,7 @@ export async function POST(req: Request) {
         status: subscription.status,
         stripe_price_id: priceId,
         plan: plan,
-        current_period_end: new Date(
-          (subscription.current_period_end as number) * 1000
-        ).toISOString(),
+        current_period_end: getCurrentPeriodEnd(subscription),
         updated_at: new Date().toISOString(),
       };
 

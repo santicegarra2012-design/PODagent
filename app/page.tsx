@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { Features } from "@/components/landing/Features";
@@ -11,7 +12,9 @@ export default function LandingPage() {
       <Navbar />
       <Hero />
       <Features />
-      <Pricing />
+      <Suspense fallback={null}>
+        <Pricing />
+      </Suspense>
       <Testimonials />
       <Footer />
     </main>

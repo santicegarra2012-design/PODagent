@@ -1,7 +1,4 @@
-import { light } from "@clerk/themes";
-
 export const authClerkAppearance = {
-  baseTheme: light,
   variables: {
     colorPrimary: "#3b82f6",
     colorText: "#0f172a",

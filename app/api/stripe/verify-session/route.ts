@@ -5,6 +5,18 @@ import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 export const dynamic = "force-dynamic";
 
+interface StripeSubscriptionWithPeriod {
+  status: string;
+  current_period_end?: number;
+  items: {
+    data: Array<{
+      price?: {
+        id?: string;
+      };
+    }>;
+  };
+}
+
 export async function GET(req: Request) {
   try {
     const { userId } = await auth();
@@ -69,14 +81,14 @@ export async function GET(req: Request) {
 
     if (subscriptionId) {
       try {
-        const subscription = await stripe.subscriptions.retrieve(
+        const subscription = (await stripe.subscriptions.retrieve(
           subscriptionId as string
-        );
+        )) as unknown as StripeSubscriptionWithPeriod;
 
         status = subscription.status;
-        currentPeriodEnd = new Date(
-          (subscription.current_period_end as number) * 1000
-        ).toISOString();
+        if (subscription.current_period_end) {
+          currentPeriodEnd = new Date(subscription.current_period_end * 1000).toISOString();
+        }
 
         priceId = subscription.items.data[0]?.price?.id || null;
         if (priceId === process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ID) {
