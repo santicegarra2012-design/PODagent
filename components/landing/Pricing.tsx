@@ -38,9 +38,9 @@ const plans = [
       "Bulk Listing Optimizer",
       "Priority AI Queue",
     ],
-    buttonText: "Upgrade to Pro",
+    buttonText: "Contact Sales",
     popular: true,
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
+    priceId: null,
     icon: Sparkles,
     gradient: "from-primary/20 to-blue-600/20",
     borderHover: "hover:border-primary/50",
@@ -57,9 +57,9 @@ const plans = [
       "API Access for Bulk Ops",
       "Dedicated Account Manager",
     ],
-    buttonText: "Upgrade to Premium",
+    buttonText: "Contact Sales",
     popular: false,
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ID,
+    priceId: null,
     icon: Crown,
     gradient: "from-purple-500/20 to-pink-500/20",
     borderHover: "hover:border-purple-500/30",
@@ -92,7 +92,7 @@ export function Pricing() {
     }
 
     if (!plan.priceId) {
-      toast.error("Please contact our sales team for this plan.");
+      toast.info("Billing is being reconfigured. Please contact support for upgrades.");
       return;
     }
 
@@ -275,7 +275,7 @@ export function Pricing() {
           transition={{ delay: 0.5 }}
           className="text-center text-slate-400 text-sm mt-10"
         >
-          🔒 Powered by Stripe — secure, encrypted payments
+          Billing is being reconfigured for the new project.
         </motion.p>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 export async function POST(request: Request) {
   try {
@@ -58,27 +58,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Initialize Supabase Admin Client using Service Role Key to bypass RLS securely
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error("[save-project] Missing Supabase environment variables");
-      return NextResponse.json(
-        { success: false, message: "Server misconfiguration: Supabase not setup." },
-        { status: 500 }
-      );
-    }
-
-    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    });
-
-    // 4. Insert the project into Supabase
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
       .from("projects")
       .insert({
         user_id: userId,
@@ -98,7 +78,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // 5. Return success
     console.log(`[save-project] Successfully saved project for user ${userId}`);
     return NextResponse.json(
       { success: true, message: "Project saved successfully.", data },

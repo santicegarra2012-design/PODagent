@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { isProUser } from "@/lib/subscription";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { createJsonChatCompletion } from "@/lib/openai";
 
 export const runtime = "nodejs";
-
-const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL = "llama-3.1-8b-instant";
 
 export async function POST(request: Request) {
   const { userId } = await auth();
@@ -29,15 +27,6 @@ export async function POST(request: Request) {
     }
   }
 
-  const apiKey = process.env.GROQ_API_KEY;
-
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "Server configuration error", message: "GROQ_API_KEY is missing." },
-      { status: 500 }
-    );
-  }
-
   let body: { query?: string };
   try {
     body = await request.json();
@@ -51,57 +40,29 @@ export async function POST(request: Request) {
   const query = body?.query?.trim() || "Suggest 5 trending POD niches for current season";
 
   try {
-    const response = await fetch(GROQ_API_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
+    const content = await createJsonChatCompletion([
+      {
+        role: "system",
+        content: `You are a high-level POD market researcher. 
+        Analyze market trends, social media viral aesthetics, and seasonal demands.
+        Always return a JSON object with a "trends" key containing an array of 5 trends.
+        Each trend must follow this structure:
+        {
+          "niche": "string",
+          "score": "Very High" | "High" | "Medium" | "Low",
+          "competition": "Low" | "Medium" | "High" | "Crowded",
+          "productIdeas": ["string"],
+          "etsyKeywords": ["string"],
+          "tiktokIdeas": ["string"],
+          "recommendedStyles": ["string"],
+          "reasoning": "string"
+        }`
       },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        response_format: { type: "json_object" },
-        messages: [
-          {
-            role: "system",
-            content: `You are a high-level POD market researcher. 
-            Analyze market trends, social media viral aesthetics, and seasonal demands.
-            Always return a JSON object with a "trends" key containing an array of 5 trends.
-            Each trend must follow this structure:
-            {
-              "niche": "string",
-              "score": "Very High" | "High" | "Medium" | "Low",
-              "competition": "Low" | "Medium" | "High" | "Crowded",
-              "productIdeas": ["string"],
-              "etsyKeywords": ["string"],
-              "tiktokIdeas": ["string"],
-              "recommendedStyles": ["string"],
-              "reasoning": "string"
-            }`
-          },
-          {
-            role: "user",
-            content: `Perform deep POD trend research for: ${query}`
-          }
-        ]
-      }),
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Provider error", message: "Groq returned an error status." },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
-
-    if (!content) {
-      return NextResponse.json(
-        { error: "Provider error", message: "Groq returned empty content." },
-        { status: 502 }
-      );
-    }
+      {
+        role: "user",
+        content: `Perform deep POD trend research for: ${query}`
+      }
+    ]);
 
     return NextResponse.json(JSON.parse(content), { status: 200 });
 

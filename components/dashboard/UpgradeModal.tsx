@@ -74,7 +74,7 @@ export function UpgradeModal({ isOpen, onClose, title, description }: UpgradeMod
             </button>
             
             <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
-              Secure payments by Stripe
+              Billing is being reconfigured
             </p>
           </div>
         </motion.div>

@@ -17,6 +17,7 @@ const isProtectedRoute = createRouteMatcher([
   "/api/user/subscription(.*)",
   "/api/dashboard/summary(.*)",
   "/api/projects(.*)",
+  "/api/copilot(.*)",
 ]);
 
 // Routes that are public (no auth required)

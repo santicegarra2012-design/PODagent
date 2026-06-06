@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { generateFalImages } from "@/lib/ai/providers/fal";
+import { generateImages } from "@/lib/ai/image-mock";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import type { GenerateImageRequest } from "@/lib/ai/image-types";
 
@@ -20,23 +20,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!process.env.FAL_KEY) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "FAL_KEY is missing. Real image generation is not configured on this deployment.",
-        },
-        { status: 503 }
-      );
-    }
-
-    console.log(`[generate-image] Fal AI Request for user ${userId}:`, body.prompt);
+    console.log(`[generate-image] Mock image request for user ${userId}:`, body.prompt);
 
     let images;
     try {
-      images = await generateFalImages(body, 4);
+      images = await generateImages(body, 4);
     } catch (genErr) {
-      console.error("[generate-image] Fal AI generation failed:", genErr);
+      console.error("[generate-image] Image generation failed:", genErr);
       return NextResponse.json(
         { success: false, message: "Image generation service is currently busy. Please try again." },
         { status: 503 }
@@ -64,7 +54,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       images,
-      provider: "fal-flux",
+      provider: "mock",
     });
   } catch (err) {
     console.error("[generate-image] Route Error:", err);
