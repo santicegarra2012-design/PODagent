@@ -12,6 +12,7 @@ import { GeneratorPanel } from "@/components/dashboard/GeneratorPanel";
 import { ResultsPanel } from "@/components/dashboard/ResultsPanel";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentProjects } from "@/components/dashboard/RecentProjects";
+import { DailyBriefing } from "@/components/dashboard/DailyBriefing";
 import type { DashboardSummary } from "@/lib/dashboard/types";
 
 type SeoResult = { title: string; tags: string[]; description: string };
@@ -213,6 +214,7 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
+      <DailyBriefing />
       <StatsCards summary={summary} />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">

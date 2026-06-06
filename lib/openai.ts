@@ -3,7 +3,7 @@ import "server-only";
 import OpenAI from "openai";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 
-export const OPENAI_CHAT_MODEL = "gpt-4.1-mini";
+export const OPENAI_CHAT_MODEL = "gpt-5.5";
 
 let openaiClient: OpenAI | null = null;
 

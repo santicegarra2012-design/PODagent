@@ -42,6 +42,10 @@ export async function getSubscription() {
 }
 
 export async function isProUser() {
+  if (process.env.FREE_BETA_MODE === "true") {
+    return true;
+  }
+
   const subscription = await getSubscription();
   return isPaidStatus(subscription?.status);
 }
