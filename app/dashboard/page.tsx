@@ -185,23 +185,38 @@ export default function DashboardPage() {
     navigator.clipboard.writeText(text);
   }
 
-  if (!isLoaded) {
+  if (!isLoaded || !summary) {
     return (
-      <div className="flex items-center justify-center py-32">
-        <div className="flex items-center gap-2 text-slate-400">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm">Loading...</span>
+      <div className="max-w-7xl mx-auto space-y-6">
+        {/* Daily Briefing Skeleton */}
+        <div className="w-full rounded-2xl border border-white/10 bg-slate-900/50 p-8 space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-slate-800 animate-pulse" />
+            <div className="space-y-2">
+              <div className="h-5 w-40 bg-slate-800 rounded animate-pulse" />
+              <div className="h-3 w-24 bg-slate-800 rounded animate-pulse" />
+            </div>
+          </div>
+          <div className="h-20 w-full bg-slate-800 rounded-xl animate-pulse" />
         </div>
-      </div>
-    );
-  }
+        
+        {/* Stats Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="h-28 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+          <div className="h-28 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+          <div className="h-28 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+        </div>
 
-  if (!summary) {
-    return (
-      <div className="flex items-center justify-center py-32">
-        <div className="flex items-center gap-2 text-slate-400">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm">Loading dashboard data...</span>
+        {/* Content Skeleton */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="xl:col-span-2 space-y-6">
+            <div className="h-44 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+            <div className="h-64 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+          </div>
+          <div className="space-y-4">
+            <div className="h-48 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+            <div className="h-72 bg-slate-900 border border-white/10 rounded-2xl animate-pulse" />
+          </div>
         </div>
       </div>
     );

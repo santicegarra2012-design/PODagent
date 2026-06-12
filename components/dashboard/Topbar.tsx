@@ -6,14 +6,19 @@ import { Menu, Sparkles } from "lucide-react";
 import { useSubscription } from "@/hooks/use-subscription";
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
-  "/dashboard": { title: "AI Generator", subtitle: "Create market-ready SEO content for your POD products" },
+  "/dashboard": { title: "Dashboard", subtitle: "Your POD business command center" },
+  "/dashboard/copilot": { title: "AI Copilot", subtitle: "Your personal POD business advisor" },
+  "/dashboard/research": { title: "Research Center", subtitle: "Discover profitable niches and market opportunities" },
+  "/dashboard/opportunities": { title: "Opportunities", subtitle: "Top market opportunities ranked by AI" },
+  "/dashboard/tasks": { title: "Tasks", subtitle: "Track your POD business tasks and progress" },
+  "/dashboard/memories": { title: "Memory Management", subtitle: "Manage what the Copilot remembers about you" },
   "/dashboard/history": { title: "History", subtitle: "Browse your past generations" },
   "/dashboard/projects": { title: "Projects", subtitle: "Manage your saved POD projects" },
   "/dashboard/settings": { title: "Settings", subtitle: "Manage your account and preferences" },
-  "/dashboard/images": { title: "AI Image Studio", subtitle: "Generate premium POD artwork with AI" },
+  "/dashboard/images": { title: "Designs", subtitle: "Generate premium POD artwork with AI" },
   "/dashboard/trends": { title: "Trend Research", subtitle: "Discover viral niches and market opportunities" },
-  "/dashboard/trademark": { title: "Trademark Checker", subtitle: "Protect your shop from IP violations and bans" },
-  "/dashboard/optimizer": { title: "Listing Optimizer", subtitle: "Supercharge your titles, tags, and descriptions with AI" },
+  "/dashboard/trademark": { title: "Trademark Checker", subtitle: "Protect your shop from IP violations" },
+  "/dashboard/optimizer": { title: "Listing Optimizer", subtitle: "Supercharge your listings with AI" },
 };
 
 interface TopbarProps {

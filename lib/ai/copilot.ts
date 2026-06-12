@@ -8,22 +8,19 @@ const openaiProvider = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const systemPrompt = `You are the POD Agent AI Copilot, a trusted business partner for a Print-on-Demand entrepreneur.
-Your roles include:
-- Business advisor
-- Research analyst
-- Product strategist
-- Accountability coach
-- Growth mentor
+const systemPrompt = `You are the POD Agent AI Copilot, a premium business partner for a Print-on-Demand entrepreneur.
+Your roles: Business advisor, Research analyst, Product strategist, Accountability coach, Growth mentor.
+
+CRITICAL INSTRUCTIONS FOR EVERY RESPONSE:
+1. You MUST start your response with: "### Context Sources Used" and briefly list the data sources you used (e.g. Profiles, Memories, Tasks, Opportunities).
+2. You MUST include: "### Today's Priorities" based on their pending tasks or opportunities.
+3. You MUST include: "### Suggested Actions" providing 2-3 clear next steps.
+4. Finally, provide your detailed conversational advice.
 
 When answering:
-- Always prioritize actionable steps.
-- Reference relevant opportunities.
-- Reference pending tasks to keep the user focused.
-- Reference the user's memories (goals, preferences) to provide personalized advice.
-- Always provide clear next steps.
-
-Use a professional, encouraging, and highly strategic tone. Your goal is to help the user grow their POD business.`;
+- ALWAYS use the user's memories (goals, preferences) to provide highly personalized advice.
+- Reference their actual tasks and opportunities.
+- Use a professional, encouraging, SaaS-quality tone.`;
 
 export async function getCopilotContext(userId: string) {
   const supabase = getSupabaseAdmin();
@@ -64,9 +61,9 @@ export async function extractAndSaveMemories(userId: string, userMessage: string
         }))
       }),
       prompt: `Analyze the following user message and extract any new, high-confidence memories.
-Only extract: Goals, Preferred niches, Store preferences, Business plans, Long-term objectives.
-Do NOT extract: Casual conversation, temporary requests, or generic questions.
-Return only memories with high confidence (8-10).
+Only extract: Goals, Preferred niches, Store preferences, Business plans, Long-term objectives, Revenue targets.
+Do NOT extract: Greetings, small talk, temporary requests, generic questions.
+Return only memories with high confidence (8-10). If none, return empty array.
 
 User Message: "${userMessage}"`
     });
@@ -74,6 +71,7 @@ User Message: "${userMessage}"`
     const highConfidenceMemories = object.memories.filter(m => m.confidence >= 8);
 
     if (highConfidenceMemories.length > 0) {
+      console.log(`[Memory System] Extracted ${highConfidenceMemories.length} high-confidence memories for user ${userId}.`, highConfidenceMemories);
       const supabase = getSupabaseAdmin();
       await supabase.from("memories").insert(
         highConfidenceMemories.map(m => ({
@@ -91,7 +89,9 @@ User Message: "${userMessage}"`
 
 export async function generateCopilotResponseStream(userId: string, messages: Array<{ role: string; content: string }>) {
   const context = await getCopilotContext(userId);
-  
+
+  console.log(`[Copilot] Context loaded for user ${userId}: profile=${!!context.profile}, memories=${context.memories.length}, tasks=${context.tasks.length}, opportunities=${context.opportunities.length}, designs=${context.designs.length}`);
+
   const contextMessage = `USER CONTEXT:
 Profile: ${JSON.stringify(context.profile)}
 Memories: ${JSON.stringify(context.memories)}
@@ -116,5 +116,40 @@ Recent Designs: ${JSON.stringify(context.designs)}`;
     messages: allMessages as any[],
   });
 
-  return result.toTextStreamResponse();
+  const textStreamResponse = result.toTextStreamResponse();
+
+  // Intercept the stream to capture the full response for saving
+  const originalBody = textStreamResponse.body;
+  if (!originalBody) return textStreamResponse;
+
+  let fullResponse = "";
+  const decoder = new TextDecoder();
+
+  const transformStream = new TransformStream({
+    transform(chunk, controller) {
+      fullResponse += decoder.decode(chunk, { stream: true });
+      controller.enqueue(chunk);
+    },
+    flush() {
+      // Save assistant response to conversations table (fire and forget)
+      if (fullResponse.trim()) {
+        getSupabaseAdmin().from("conversations").insert({
+          user_id: userId,
+          role: "assistant",
+          message: fullResponse.trim(),
+        }).then(({ error }) => {
+          if (error) console.error("[Copilot] Failed to save assistant response:", error);
+          else console.log(`[Copilot] Saved assistant response (${fullResponse.length} chars) for user ${userId}`);
+        });
+      }
+    }
+  });
+
+  const newBody = originalBody.pipeThrough(transformStream);
+
+  return new Response(newBody, {
+    headers: textStreamResponse.headers,
+    status: textStreamResponse.status,
+  });
 }
+

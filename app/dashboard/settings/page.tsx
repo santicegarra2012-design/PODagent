@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import {
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSubscription } from "@/hooks/use-subscription";
+import { toast } from "sonner";
 
 // ─── Toggle Switch ─────────────────────────────────────────────────────────────
 function Toggle({
@@ -117,6 +118,21 @@ export default function SettingsPage() {
   const { user, isLoaded: isUserLoaded } = useUser();
   const { subscription, isPro, isLoading: isSubLoading, refresh: refreshSubscription } = useSubscription();
   const [loadingPortal, setLoadingPortal] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("mock_portal") === "true") {
+        toast.info("Beta Billing Portal: You are currently on a Free Beta plan. No real credit cards are processed.", {
+          duration: 5000,
+        });
+        // Clean URL params
+        const url = new URL(window.location.href);
+        url.searchParams.delete("mock_portal");
+        window.history.replaceState({}, "", url.toString());
+      }
+    }
+  }, []);
 
   const handleManageBilling = async () => {
     if (!isPro) {

@@ -16,18 +16,21 @@ import {
   LineChart,
   ShieldAlert,
   PenTool,
+  Target,
+  ListTodo,
+  BrainCircuit,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSubscription } from "@/hooks/use-subscription";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "AI Images", href: "/dashboard/images", icon: ImageIcon, badge: "New" },
-  { label: "Trend Research", href: "/dashboard/trends", icon: LineChart },
-  { label: "Listing Optimizer", href: "/dashboard/optimizer", icon: PenTool },
-  { label: "Trademark Checker", href: "/dashboard/trademark", icon: ShieldAlert },
-  { label: "History", href: "/dashboard/history", icon: History },
-  { label: "Projects", href: "/dashboard/projects", icon: FolderOpen },
+  { label: "AI Copilot", href: "/dashboard/copilot", icon: Sparkles, badge: "Beta" },
+  { label: "Research Center", href: "/dashboard/research", icon: LineChart },
+  { label: "Designs", href: "/dashboard/images", icon: ImageIcon },
+  { label: "Opportunities", href: "/dashboard/opportunities", icon: Target },
+  { label: "Tasks", href: "/dashboard/tasks", icon: ListTodo },
+  { label: "Memory Mgmt", href: "/dashboard/memories", icon: BrainCircuit },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
